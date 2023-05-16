@@ -23,4 +23,16 @@ async function getUserByEmail(email: string): Promise<User | null> {
     return userRepository.findOne({ where: { email } });
 }
 
-export { addUser, getUserByEmail };
+async function setUserIGDBAuth(email: string, auth: string): Promise<void> {
+
+    const user = await getUserByEmail(email);
+
+    user.IGDBCode = auth;
+
+    await userRepository.save(user);
+
+    return;
+
+}
+
+export { addUser, getUserByEmail, setUserIGDBAuth };

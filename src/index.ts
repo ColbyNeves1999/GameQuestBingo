@@ -4,6 +4,7 @@ import express, { Express } from 'express';
 import session from 'express-session';
 import connectSqlite3 from 'connect-sqlite3';
 import { scheduleJob } from 'node-schedule';
+import { registerUser, logIn } from './controllers/UserController';
 
 const app: Express = express();
 const { PORT, COOKIE_SECRET } = process.env;
@@ -32,6 +33,10 @@ scheduleJob('1 * * * *', iRunEveryHour);
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public', { extensions: ['html'] }));
 app.set('view engine', 'ejs');
+
+//Account register/login/data managment
+app.post('/registerUser', registerUser);
+app.post('/login', logIn);
 
 app.listen(PORT, () => {
     console.log(`Listening at http://localhost:${PORT}`);

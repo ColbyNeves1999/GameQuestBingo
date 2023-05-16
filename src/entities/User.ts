@@ -13,7 +13,7 @@ export class User {
     passwordHash: string;
 
     @Column({ default: null })
-    gameDataCode: string;
+    IGDBCode: string;
 
     @Column({ default: null })
     playstationCode: string;
