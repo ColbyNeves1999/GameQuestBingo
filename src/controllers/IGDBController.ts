@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { IGDBAuthorizationModel } from '../models/IGDBModel';
+import { IGDBAuthorizationModel, IGDBGameDatabasePullModel } from '../models/IGDBModel';
 import { getUserByEmail } from '../models/UserModel';
 
 async function IGDBAuthorization(req: Request, res: Response): Promise<void> {
@@ -15,4 +15,13 @@ async function IGDBAuthorization(req: Request, res: Response): Promise<void> {
 
 }
 
-export { IGDBAuthorization };
+async function IGDBGameDatabasePull(req: Request, res: Response): Promise<void> {
+
+    await IGDBGameDatabasePullModel(req.session.authenticatedUser.email);
+
+    res.sendStatus(200);
+    return;
+
+}
+
+export { IGDBAuthorization, IGDBGameDatabasePull };

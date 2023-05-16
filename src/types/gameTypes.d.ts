@@ -1,0 +1,5 @@
+type gameInfo = {
+
+    name: string;
+
+}

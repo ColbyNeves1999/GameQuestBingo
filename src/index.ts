@@ -5,7 +5,7 @@ import session from 'express-session';
 import connectSqlite3 from 'connect-sqlite3';
 import { scheduleJob } from 'node-schedule';
 import { registerUser, logIn } from './controllers/UserController';
-import { IGDBAuthorization } from './controllers/IGDBController';
+import { IGDBAuthorization, IGDBGameDatabasePull } from './controllers/IGDBController';
 
 const app: Express = express();
 const { PORT, COOKIE_SECRET } = process.env;
@@ -39,6 +39,7 @@ app.set('view engine', 'ejs');
 app.post('/registerUser', registerUser);
 app.post('/login', logIn);
 app.post('/IGBDAuth', IGDBAuthorization);
+app.post('/getGameDatabase', IGDBGameDatabasePull);
 
 app.listen(PORT, () => {
     console.log(`Listening at http://localhost:${PORT}`);

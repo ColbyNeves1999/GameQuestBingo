@@ -6,7 +6,10 @@ export class Game {
     @PrimaryGeneratedColumn('uuid')
     gameId: string;
 
-    @Column()
+    @Column({ default: null })
     title: string;
+
+    @Column({ default: null })
+    rating: string;
 
 }
