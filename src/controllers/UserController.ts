@@ -46,7 +46,7 @@ async function logIn(req: Request, res: Response): Promise<void> {
     req.session.authenticatedUser = {
         email: user.email,
         userId: user.userId,
-        gameDataCode: user.IGDBCode,
+        IGDBCode: user.IGDBCode,
         playstationCode: user.playstationCode,
         xboxCode: user.xboxCode,
         nintendoCode: user.nintendoCode,

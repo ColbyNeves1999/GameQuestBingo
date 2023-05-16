@@ -8,7 +8,7 @@ declare module 'express-session' {
     authenticatedUser: {
       email: string;
       userId: string;
-      gameDataCode: string;
+      IGDBCode: string;
       playstationCode: string;
       xboxCode: string;
       nintendoCode: string;
