@@ -1,4 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, Relation } from 'typeorm';
+
+import { Platform } from './Platforms';
 
 @Entity()
 export class Game {
@@ -14,5 +16,8 @@ export class Game {
 
     @Column({ default: null })
     console: string;
+
+    @OneToMany(() => Platform, (platform) => platform.game, { cascade: ['insert', 'update'] })
+    platform: Relation<Platform>[];
 
 }

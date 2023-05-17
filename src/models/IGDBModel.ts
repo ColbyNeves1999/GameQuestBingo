@@ -45,7 +45,7 @@ async function IGDBGameDatabasePullModel(email: string): Promise<void> {
 
         let fetchResponse = await fetch('https://api.igdb.com/v4/games', {
             method: 'POST',
-            body: `fields name, age_ratings; limit 500; where platforms = (12, 146, 48, 49, 130, 6, 167, 169) & age_ratings != null & version_parent = null; offset ${offset};`,
+            body: `fields name, age_ratings, platforms, age_ratings.rating; limit 500; where platforms = (12, 146, 48, 49, 130, 6, 167, 169) & age_ratings != null & version_parent = null & age_ratings.category = 2; offset ${offset};`,
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Client-ID': CLIENT_ID,
@@ -55,14 +55,16 @@ async function IGDBGameDatabasePullModel(email: string): Promise<void> {
 
         const resJson = await fetchResponse.json();
 
+        console.log(resJson);
+
         if (resJson.length === 0) {
             loop = false;
         } else {
 
             for (let i = 0; i < resJson.length; i++) {
-                const { name } = resJson[i] as gameInfo;
+                const { name, platforms, age_ratings } = resJson[i] as gameInfo;
 
-                await addGame(name);
+                await addGame(name, platforms, age_ratings[0].rating);
 
             }
 

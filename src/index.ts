@@ -6,6 +6,9 @@ import connectSqlite3 from 'connect-sqlite3';
 import { scheduleJob } from 'node-schedule';
 import { registerUser, logIn } from './controllers/UserController';
 import { IGDBAuthorization, IGDBGameDatabasePull } from './controllers/IGDBController';
+import { IGDBGameDatabasePullModel } from './models/IGDBModel';
+
+const ADMIN_EMAIL = process.env.DATABASEADMIN_EMAIL;
 
 const app: Express = express();
 const { PORT, COOKIE_SECRET } = process.env;
@@ -26,7 +29,7 @@ app.use(
 app.use(express.json());
 
 function iRunEveryHour() {
-
+    IGDBGameDatabasePullModel(ADMIN_EMAIL);
 }
 
 scheduleJob('1 * * * *', iRunEveryHour);
