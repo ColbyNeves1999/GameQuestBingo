@@ -5,6 +5,12 @@ const gameRepository = AppDataSource.getRepository(Game);
 
 async function addGame(title: string): Promise<void> {
 
+    const existingGame = await getGameByName(title);
+
+    if (existingGame) {
+        return;
+    }
+
     // Create the new user object and saves data
     let newGame = new Game();
     newGame.title = title;
@@ -18,4 +24,10 @@ async function addGame(title: string): Promise<void> {
 
 }
 
-export { addGame };
+async function getGameByName(title: string): Promise<Game | null> {
+
+    return gameRepository.findOne({ where: { title } });
+
+}
+
+export { addGame, getGameByName };

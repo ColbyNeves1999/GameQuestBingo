@@ -12,4 +12,7 @@ export class Game {
     @Column({ default: null })
     rating: string;
 
+    @Column({ default: null })
+    console: string;
+
 }

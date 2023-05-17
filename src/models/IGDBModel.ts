@@ -39,14 +39,13 @@ async function IGDBGameDatabasePullModel(email: string): Promise<void> {
     const user = await getUserByEmail(email);
 
     let offset = 0;
-    let num = 0;
-    let fetchResponse;
+    let loop = true;
 
-    do {
+    while (loop) {
 
-        fetchResponse = await fetch('https://api.igdb.com/v4/games', {
+        let fetchResponse = await fetch('https://api.igdb.com/v4/games', {
             method: 'POST',
-            body: `fields name, age_ratings; limit 500; where platforms = (48, 49, 130, 6) & age_ratings != null & parent_game = null; offset ${offset};`,
+            body: `fields name, age_ratings; limit 500; where platforms = (12, 146, 48, 49, 130, 6, 167, 169) & age_ratings != null & version_parent = null; offset ${offset};`,
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Client-ID': CLIENT_ID,
@@ -56,23 +55,20 @@ async function IGDBGameDatabasePullModel(email: string): Promise<void> {
 
         const resJson = await fetchResponse.json();
 
-        console.log(resJson);
+        if (resJson.length === 0) {
+            loop = false;
+        } else {
 
-        for (let i = 0; i < 500; i++) {
-            console.log(num);
-            num += 1;
-            const { name } = resJson[i] as gameInfo;
+            for (let i = 0; i < resJson.length; i++) {
+                const { name } = resJson[i] as gameInfo;
 
-            await addGame(name);
+                await addGame(name);
 
+            }
+
+            offset += resJson.length;
         }
-
-        offset += 500;
-
-    } while (fetchResponse);
-    //console.log(resJson);
-
-    //console.log("https://api.igdb.com/v4/games?" + myJSON)
+    }
 
     return;
 
