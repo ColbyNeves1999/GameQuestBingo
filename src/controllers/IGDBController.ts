@@ -7,7 +7,6 @@ async function IGDBAuthorization(req: Request, res: Response): Promise<void> {
     await IGDBAuthorizationModel(req.session.authenticatedUser.email);
 
     const user = await getUserByEmail(req.session.authenticatedUser.email);
-
     req.session.authenticatedUser.IGDBCode = user.IGDBCode;
 
     res.sendStatus(200);
@@ -16,6 +15,9 @@ async function IGDBAuthorization(req: Request, res: Response): Promise<void> {
 }
 
 async function IGDBGameDatabasePull(req: Request, res: Response): Promise<void> {
+
+    const user = await getUserByEmail(req.session.authenticatedUser.email);
+    req.session.authenticatedUser.IGDBCode = user.IGDBCode;
 
     await IGDBGameDatabasePullModel(req.session.authenticatedUser.email);
 

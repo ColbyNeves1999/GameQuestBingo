@@ -7,6 +7,7 @@ import { scheduleJob } from 'node-schedule';
 import { registerUser, logIn } from './controllers/UserController';
 import { IGDBAuthorization, IGDBGameDatabasePull } from './controllers/IGDBController';
 import { IGDBGameDatabasePullModel } from './models/IGDBModel';
+import { IGDBAuthorizationModel } from './models/IGDBModel';
 
 const ADMIN_EMAIL = process.env.DATABASEADMIN_EMAIL;
 
@@ -29,6 +30,7 @@ app.use(
 app.use(express.json());
 
 function iRunEveryHour() {
+    IGDBAuthorizationModel(ADMIN_EMAIL);
     IGDBGameDatabasePullModel(ADMIN_EMAIL);
 }
 
