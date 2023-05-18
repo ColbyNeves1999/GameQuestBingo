@@ -1,9 +1,11 @@
 import { AppDataSource } from '../dataSource';
 import { Game } from '../entities/Game';
 import { Platform } from '../entities/Platforms';
+import { getPlatformFromListByID } from './PlatformModel';
 
 const gameRepository = AppDataSource.getRepository(Game);
 const platformRepository = AppDataSource.getRepository(Platform);
+
 
 async function addGame(title: string, platforms: [], rating: string): Promise<void> {
 
@@ -33,7 +35,10 @@ async function addPlatform(platforms: [], game: Game): Promise<void> {
     for (let i = 0; i < platforms.length; i++) {
 
         let newPlatform = new Platform();
-        newPlatform.platform = platforms[i];
+
+        const platName = await getPlatformFromListByID(platforms[i]);
+
+        newPlatform.platform = platName.platformName;
         newPlatform.game = game;
 
         await platformRepository.save(newPlatform);
