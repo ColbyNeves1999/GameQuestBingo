@@ -29,7 +29,9 @@ app.use(
 
 app.use(express.json());
 
+//Auto refreshes IGDB for ADMIN_EMAIL then pulls IGDB game database
 function iRunEveryHour() {
+    //ADMIN_EMAIL is in .env;
     IGDBAuthorizationModel(ADMIN_EMAIL);
     IGDBGameDatabasePullModel(ADMIN_EMAIL);
 }
@@ -41,10 +43,10 @@ app.use(express.static('public', { extensions: ['html'] }));
 app.set('view engine', 'ejs');
 
 //Account register/login/data managment
-app.post('/registerUser', registerUser);
-app.post('/login', logIn);
-app.post('/IGBDAuth', IGDBAuthorization);
-app.post('/getGameDatabase', IGDBGameDatabasePull);
+app.post('/registerUser', registerUser); //Registers a user
+app.post('/login', logIn); //Lets a user login
+app.post('/IGBDAuth', IGDBAuthorization); //Allows a user to get IGDB Authorization (won't likely be used by user)
+app.post('/getGameDatabase', IGDBGameDatabasePull); //Allows for the IGDB game database to be pulled
 
 app.listen(PORT, () => {
     console.log(`Listening at http://localhost:${PORT}`);
