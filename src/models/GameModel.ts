@@ -7,8 +7,8 @@ const platformRepository = AppDataSource.getRepository(Platform);
 
 async function addGame(title: string, platforms: [], rating: string): Promise<void> {
 
+    //Just making sure this exact game doesn't exist already
     const existingGame = await getGameByName(title);
-
     if (existingGame) {
         return;
     }
@@ -18,9 +18,7 @@ async function addGame(title: string, platforms: [], rating: string): Promise<vo
     newGame.title = title;
     newGame.rating = rating;
 
-    // Then save it to the database
-    // NOTES: We reassign to `newUser` so we can access
-    // NOTES: the fields the database autogenerates (the id & default columns)
+    // Then save game to the database
     newGame = await gameRepository.save(newGame);
 
     await addPlatform(platforms, newGame);
@@ -31,6 +29,7 @@ async function addGame(title: string, platforms: [], rating: string): Promise<vo
 
 async function addPlatform(platforms: [], game: Game): Promise<void> {
 
+    //Associates each game with each platform that version of the game was released on
     for (let i = 0; i < platforms.length; i++) {
 
         let newPlatform = new Platform();

@@ -5,14 +5,12 @@ const userRepository = AppDataSource.getRepository(User);
 
 async function addUser(email: string, passwordHash: string): Promise<User> {
 
-    // Create the new user object and saves data
+    //Create the new user object and saves data
     let newUser = new User();
     newUser.email = email;
     newUser.passwordHash = passwordHash;
 
-    // Then save it to the database
-    // NOTES: We reassign to `newUser` so we can access
-    // NOTES: the fields the database autogenerates (the id & default columns)
+    //Then save the user to the database
     newUser = await userRepository.save(newUser);
 
     return newUser;
@@ -25,10 +23,11 @@ async function getUserByEmail(email: string): Promise<User | null> {
 
 async function setUserIGDBAuth(email: string, auth: string): Promise<void> {
 
+    //Get user and set their IGDB authorization token
     const user = await getUserByEmail(email);
-
     user.IGDBCode = auth;
 
+    //Then save the code to the database
     await userRepository.save(user);
 
     return;
