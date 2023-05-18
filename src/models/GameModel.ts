@@ -50,4 +50,8 @@ async function getGameByName(title: string): Promise<Game | null> {
 
 }
 
-export { addGame, getGameByName };
+async function getGames(): Promise<Game[]> {
+    return await gameRepository.find();
+}
+
+export { addGame, getGameByName, getGames };

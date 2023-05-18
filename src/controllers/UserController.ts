@@ -10,8 +10,7 @@ async function registerUser(req: Request, res: Response): Promise<void> {
     const user = await getUserByEmail(email);
 
     if (user) {
-        //res.redirect('/login');
-        res.sendStatus(404);
+        res.redirect('/register');
         return;
     }
 
@@ -20,8 +19,7 @@ async function registerUser(req: Request, res: Response): Promise<void> {
 
     await addUser(email, passwordHash);
 
-    //res.redirect('/login');
-    res.sendStatus(200);
+    res.redirect('/login');
     return;
 
 }
@@ -32,14 +30,14 @@ async function logIn(req: Request, res: Response): Promise<void> {
     const user = await getUserByEmail(email);
 
     if (!user) {
-        res.sendStatus(404);
+        res.redirect('/login');
         return;
     }
 
     const { passwordHash } = user;
 
     if (!(await argon2.verify(passwordHash, password))) {
-        res.sendStatus(404); // 404 Not Found
+        res.redirect('/login');
         return;
     }
 
@@ -54,8 +52,7 @@ async function logIn(req: Request, res: Response): Promise<void> {
     };
     req.session.isLoggedIn = true;
 
-    //res.redirect('/adminStatus');
-    res.sendStatus(200);
+    res.redirect('/index');
     return;
 
 }

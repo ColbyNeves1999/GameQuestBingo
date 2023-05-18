@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Game List</title>
+</head>
+
+<body>
+    <h1>Please create your account</h1>
+    <form id="setDevice" method="GET" action="/index">
+        <button>Home</button>
+    </form>
+
+    <h3>Game list</h3>
+    <ul id="gameList">
+        <% for( const game of games ) { %>
+            <li class="game">
+                <h3 class="gameTitle">
+                    <%= game.title %>
+                </h3>
+            </li>
+            <% } %>
+    </ul>
+
+    <script>
+        // JavaScript code to sort the game list alphabetically
+        var gameList = document.getElementById("gameList");
+        var items = gameList.getElementsByClassName("game");
+        var sortedItems = Array.from(items).sort(function (a, b) {
+            var titleA = a.getElementsByClassName("gameTitle")[0].textContent.toLowerCase();
+            var titleB = b.getElementsByClassName("gameTitle")[0].textContent.toLowerCase();
+            return titleA.localeCompare(titleB);
+        });
+
+        for (var i = 0; i < sortedItems.length; i++) {
+            gameList.appendChild(sortedItems[i]);
+        }
+    </script>
+</body>
+
+</html>

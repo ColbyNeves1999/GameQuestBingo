@@ -8,6 +8,7 @@ import { registerUser, logIn } from './controllers/UserController';
 import { IGDBAuthorization, IGDBGameDatabasePull } from './controllers/IGDBController';
 import { IGDBGameDatabasePullModel } from './models/IGDBModel';
 import { IGDBAuthorizationModel } from './models/IGDBModel';
+import { getAllGames } from './controllers/GameController';
 
 const ADMIN_EMAIL = process.env.DATABASEADMIN_EMAIL;
 
@@ -47,6 +48,9 @@ app.post('/registerUser', registerUser); //Registers a user
 app.post('/login', logIn); //Lets a user login
 app.post('/IGBDAuth', IGDBAuthorization); //Allows a user to get IGDB Authorization (won't likely be used by user)
 app.post('/getGameDatabase', IGDBGameDatabasePull); //Allows for the IGDB game database to be pulled
+
+//Page requests
+app.get('/getGames', getAllGames);
 
 app.listen(PORT, () => {
     console.log(`Listening at http://localhost:${PORT}`);
