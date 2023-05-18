@@ -51,7 +51,7 @@ async function IGDBGameDatabasePullModel(email: string): Promise<void> {
             method: 'POST',
             body: `fields name, age_ratings, platforms, age_ratings.rating; 
                     limit 500; 
-                    where platforms = (12, 146, 48, 49, 130, 6, 167, 169) & age_ratings != null & version_parent = null & age_ratings.category = 2; 
+                    where platforms = (6,48,49,130,9,34,14,3,9,12,8,11,7,167,169,170,38,46,20,37,5,41,21,4,19,18,24,23,22,29,30,32,28,33,43,44,45,47,15,35) & age_ratings != null & version_parent = null & age_ratings.category = 2; 
                     offset ${offset};`,
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
