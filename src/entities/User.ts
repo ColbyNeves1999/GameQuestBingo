@@ -22,10 +22,16 @@ export class User {
     playstationCode: string;
 
     @Column({ default: null })
+    playstationRefreshCode: string;
+
+    @Column({ default: null })
     xboxUsername: string;
 
     @Column({ default: null })
     xboxCode: string;
+
+    @Column({ default: null })
+    xboxRefreshCode: string;
 
     @Column({ default: null })
     nintendoCode: string;
@@ -35,6 +41,9 @@ export class User {
 
     @Column({ default: null })
     pcCode: string;
+
+    @Column({ default: null })
+    pcRefreshCode: string;
 
     @Column({ default: null })
     refreshCode: string;

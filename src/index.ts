@@ -9,6 +9,7 @@ import { IGDBAuthorization, IGDBGameDatabasePull } from './controllers/IGDBContr
 import { IGDBGameDatabasePullModel } from './models/IGDBModel';
 import { IGDBAuthorizationModel } from './models/IGDBModel';
 import { getAllGames } from './controllers/GameController';
+import { xboxAuth } from './controllers/XboxController';
 
 const ADMIN_EMAIL = process.env.DATABASEADMIN_EMAIL;
 
@@ -51,6 +52,9 @@ app.post('/getGameDatabase', IGDBGameDatabasePull); //Allows for the IGDB game d
 
 //Page requests
 app.get('/getGames', getAllGames);
+
+//Xbox requests
+app.get("/xbox", xboxAuth);
 
 app.listen(PORT, () => {
     console.log(`Listening at http://localhost:${PORT}`);
