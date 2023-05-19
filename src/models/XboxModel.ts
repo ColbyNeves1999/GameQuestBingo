@@ -1,0 +1,1 @@
+import { authenticate } from '@xboxreplay/xboxlive-auth';

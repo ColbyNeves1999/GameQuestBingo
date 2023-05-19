@@ -16,13 +16,22 @@ export class User {
     IGDBCode: string;
 
     @Column({ default: null })
+    psUsername: string;
+
+    @Column({ default: null })
     playstationCode: string;
+
+    @Column({ default: null })
+    xboxUsername: string;
 
     @Column({ default: null })
     xboxCode: string;
 
     @Column({ default: null })
     nintendoCode: string;
+
+    @Column({ default: null })
+    steamUsername: string;
 
     @Column({ default: null })
     pcCode: string;
