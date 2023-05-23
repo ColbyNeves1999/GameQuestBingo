@@ -54,7 +54,7 @@ app.post('/getGameDatabase', IGDBGameDatabasePull); //Allows for the IGDB game d
 app.get('/getGames', getAllGames);
 
 //Xbox requests
-app.get("/xbox", xboxAuth);
+app.post("/xbox", xboxAuth);
 
 app.listen(PORT, () => {
     console.log(`Listening at http://localhost:${PORT}`);
