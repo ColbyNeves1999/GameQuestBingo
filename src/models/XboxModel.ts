@@ -62,7 +62,7 @@ async function getAchievements(xuid: string, xsts_token: string, user_hash: stri
         });
 
         const resJson = await fetchResponse.json();
-        console.log(resJson);
+        //console.log(resJson);
         const { pagingInfo } = resJson as xboxAchievements;
         continuationToken = pagingInfo.continuationToken;
 
