@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, Relation } from 'typeorm';
 
 import { Platform } from './Platforms';
+import { Objective } from './UserObjectiveList';
 
 @Entity()
 export class Game {
@@ -19,5 +20,8 @@ export class Game {
 
     @OneToMany(() => Platform, (platform) => platform.game, { cascade: ['insert', 'update'] })
     platform: Relation<Platform>[];
+
+    @OneToMany(() => Objective, (objective) => objective.game, { cascade: ['insert', 'update'] })
+    objectives: Relation<Objective>[];
 
 }
