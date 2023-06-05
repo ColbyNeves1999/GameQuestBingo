@@ -1,4 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, Relation, OneToMany } from 'typeorm';
+
+import { Objective } from './UserObjectiveList';
 
 @Entity()
 export class User {
@@ -47,5 +49,8 @@ export class User {
 
     @Column({ default: null })
     refreshCode: string;
+
+    @OneToMany(() => Objective, (objective) => objective.game, { cascade: ['insert', 'update'] })
+    objectives: Relation<Objective>[];
 
 }
