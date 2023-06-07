@@ -10,6 +10,7 @@ import { IGDBGameDatabasePullModel } from './models/IGDBModel';
 import { IGDBAuthorizationModel } from './models/IGDBModel';
 import { getAllGames } from './controllers/GameController';
 import { xboxAuth } from './controllers/XboxController';
+import { objectiveSubmittedPage, objectiveSubmit } from './controllers/UserObjectiveController';
 
 const ADMIN_EMAIL = process.env.DATABASEADMIN_EMAIL;
 
@@ -55,6 +56,10 @@ app.get('/getGames', getAllGames);
 
 //Xbox requests
 app.post("/xbox", xboxAuth);
+
+//User objectives
+app.post("/userObjectives", objectiveSubmittedPage);
+app.post("/createObjective", objectiveSubmit)
 
 app.listen(PORT, () => {
     console.log(`Listening at http://localhost:${PORT}`);

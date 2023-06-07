@@ -6,7 +6,8 @@ import { getGameByName } from '../models/GameModel';
 
 async function objectiveSubmittedPage(req: Request, res: Response): Promise<void> {
 
-    res.render('submittedObjectiveList', {});
+    const errorOcc = "";
+    res.render('userObjectiveList', { errorOcc });
 
 }
 
@@ -16,6 +17,8 @@ async function objectiveSubmit(req: Request, res: Response): Promise<void> {
     const game = await getGameByName(title);
     const user = await getUserByEmail(req.session.authenticatedUser.email);
 
+    let errorOcc = "Objective submitted";
+
     if (!user) {
         res.redirect('/login');
         return;
@@ -23,15 +26,15 @@ async function objectiveSubmit(req: Request, res: Response): Promise<void> {
 
     if (!game) {
 
-        const errorOcc = "An error occured during submission";
-        res.render('submittedObjectiveList', { errorOcc });
+        errorOcc = "An error occured during submission";
+        res.render('userObjectiveList', { errorOcc });
         return;
 
     }
 
     await addObjective(game, objective, user);
 
-    res.sendStatus(200);
+    res.render('userObjectiveList', { errorOcc });
     return;
 
 }

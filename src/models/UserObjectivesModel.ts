@@ -3,8 +3,6 @@ import { Objective } from '../entities/UserObjectiveList';
 import { User } from '../entities/User';
 import { Game } from '../entities/Game';
 
-import { getGameByName } from './GameModel';
-
 const objectiveRepository = AppDataSource.getRepository(Objective);
 
 async function addObjective(title: Game, objective: string, user: User) {

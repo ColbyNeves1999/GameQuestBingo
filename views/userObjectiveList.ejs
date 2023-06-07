@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Game List</title>
+</head>
+
+<body>
+
+    <h1>
+        <%= errorOcc%>
+    </h1>
+
+    <form id="setDevice" method="GET" action="/index">
+        <button>Home</button>
+    </form>
+
+    <form method="POST" action="/createObjective">
+        <!-- calls the post method to login the user to the server -->
+        <label for="title"></label>
+        <input class="input" type="title" name="title" id="title" placeholder="title" required>
+        <label class="input" for="objective"></label>
+        <input class="input" type="objective" name="objective" id="objective" placeholder="objective" required>
+        <div>
+            <button class="btn">Submit</button>
+        </div>
+    </form>
+
+</body>
+
+</html>
