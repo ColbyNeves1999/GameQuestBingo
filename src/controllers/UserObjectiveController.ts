@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import { getUserByEmail } from '../models/UserModel';
-import { addObjective } from '../models/UserObjectivesModel';
+import { addObjective, getObj } from '../models/UserObjectivesModel';
 import { getGameByName } from '../models/GameModel';
 
 async function objectiveSubmittedPage(req: Request, res: Response): Promise<void> {
@@ -26,7 +26,17 @@ async function objectiveSubmit(req: Request, res: Response): Promise<void> {
 
     if (!game) {
 
-        errorOcc = "An error occured during submission";
+        errorOcc = "No game with that title exists";
+        res.render('userObjectiveList', { errorOcc });
+        return;
+
+    }
+
+    const obj = await getObj(objective, title);
+
+    if (obj) {
+
+        errorOcc = "Someone has submitted that";
         res.render('userObjectiveList', { errorOcc });
         return;
 

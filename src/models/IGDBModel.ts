@@ -77,7 +77,8 @@ async function IGDBGameDatabasePullModel(email: string): Promise<void> {
             for (let i = 0; i < resJson.length; i++) {
 
                 const { name, platforms, age_ratings } = resJson[i] as gameInfo;
-                await addGame(name, platforms, age_ratings[0].rating);
+                const temp = name.toLocaleLowerCase();
+                await addGame(temp, platforms, age_ratings[0].rating);
 
             }
 
