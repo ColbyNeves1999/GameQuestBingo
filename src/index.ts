@@ -11,6 +11,8 @@ import { IGDBAuthorizationModel } from './models/IGDBModel';
 import { getAllGames } from './controllers/GameController';
 import { xboxAuth } from './controllers/XboxController';
 import { objectiveSubmittedPage, objectiveSubmit } from './controllers/UserObjectiveController';
+import { validateNewUserBody, validateLoginBody } from './validators/loginValidators';
+import { validateNewUserObj } from './validators/userObjectiveValidators';
 
 const ADMIN_EMAIL = process.env.DATABASEADMIN_EMAIL;
 
@@ -46,8 +48,8 @@ app.use(express.static('public', { extensions: ['html'] }));
 app.set('view engine', 'ejs');
 
 //Account register/login/data managment
-app.post('/registerUser', registerUser); //Registers a user
-app.post('/login', logIn); //Lets a user login
+app.post('/registerUser', validateNewUserBody, registerUser); //Registers a user
+app.post('/login', validateLoginBody, logIn); //Lets a user login
 app.post('/IGBDAuth', IGDBAuthorization); //Allows a user to get IGDB Authorization (won't likely be used by user)
 app.post('/getGameDatabase', IGDBGameDatabasePull); //Allows for the IGDB game database to be pulled
 
@@ -59,7 +61,7 @@ app.post("/xbox", xboxAuth);
 
 //User objectives
 app.post("/userObjectives", objectiveSubmittedPage);
-app.post("/createObjective", objectiveSubmit)
+app.post("/createObjective", validateNewUserObj, objectiveSubmit);
 
 app.listen(PORT, () => {
     console.log(`Listening at http://localhost:${PORT}`);
