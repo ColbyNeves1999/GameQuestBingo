@@ -36,7 +36,7 @@ async function objectiveSubmit(req: Request, res: Response): Promise<void> {
 
     if (obj) {
 
-        errorOcc = "Someone has submitted that";
+        errorOcc = "Someone has submitted that before";
         res.render('userObjectiveList', { errorOcc });
         return;
 
