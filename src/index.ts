@@ -13,6 +13,7 @@ import { xboxAuth } from './controllers/XboxController';
 import { objectiveSubmittedPage, objectiveSubmit } from './controllers/UserObjectiveController';
 import { validateNewUserBody, validateLoginBody } from './validators/loginValidators';
 import { validateNewUserObj } from './validators/userObjectiveValidators';
+import { bingoCreatorPage, selectBingoObjectives } from './controllers/BingoController';
 
 const ADMIN_EMAIL = process.env.DATABASEADMIN_EMAIL;
 
@@ -62,6 +63,10 @@ app.post("/xbox", xboxAuth);
 //User objectives
 app.post("/userObjectives", objectiveSubmittedPage);
 app.post("/createObjective", validateNewUserObj, objectiveSubmit);
+
+//Bingo Page
+app.post("/bingoCreatorPage", bingoCreatorPage);
+app.post("/selectBingoObjectives", selectBingoObjectives);
 
 app.listen(PORT, () => {
     console.log(`Listening at http://localhost:${PORT}`);
