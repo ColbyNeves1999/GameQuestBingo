@@ -37,10 +37,7 @@ async function bingoSelector(size: number, title: string): Promise<string[] | nu
         bingoObjectives = 9
     } else if (size == 5 && objLen < 25 && objLen >= 9) {
         bingoObjectives = 9;
-    }/* else {
-        console.log("or here");
-        return null;
-    }*/
+    }
 
     for (let i = 0; i < bingoObjectives; i++) {
 
