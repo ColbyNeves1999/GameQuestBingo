@@ -13,7 +13,10 @@ async function selectBingoObjectives(req: Request, res: Response): Promise<void>
     const { title, size } = req.body as bingoPara;
     //console.log(title, size);
 
-    console.log(await bingoSelector(size, title));
+    const array = await bingoSelector(size, title);
+    //console.log(await bingoSelector(size, title));
+
+    console.log(array);
 
     res.sendStatus(200);
     return;
