@@ -8,6 +8,12 @@ const objectiveRepository = AppDataSource.getRepository(Objective);
 async function bingoSelector(size: number, title: string): Promise<string[] | null> {
 
     const game = await getGameByName(title);
+    if (!game) {
+
+        return null;
+
+    }
+
     const gameID = game.gameId;
     const listOfObjectives = await objectiveRepository
         .createQueryBuilder('objectives')
@@ -15,6 +21,12 @@ async function bingoSelector(size: number, title: string): Promise<string[] | nu
         .getMany();
     const objLen = listOfObjectives.length;
     const bingoArray: string[] = [];
+
+    if (listOfObjectives.length == 0) {
+
+        return null;
+
+    }
 
     //Size options are 3x3, 5x5, 9x9
     let bingoObjectives;
