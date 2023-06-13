@@ -49,6 +49,17 @@ async function addPlatform(platforms: [], game: Game): Promise<void> {
 
 }
 
+async function setSteamID(steamID: string, game: Game): Promise<void> {
+
+    //Associates each game with steamID
+    game.steamID = steamID;
+
+    await gameRepository.save(game);
+
+    return;
+
+}
+
 async function getGameByName(title: string): Promise<Game | null> {
 
     return gameRepository.findOne({ where: { title } });
@@ -59,4 +70,4 @@ async function getGames(): Promise<Game[]> {
     return await gameRepository.find();
 }
 
-export { addGame, getGameByName, getGames };
+export { addGame, getGameByName, getGames, setSteamID };

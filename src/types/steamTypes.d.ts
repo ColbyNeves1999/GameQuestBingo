@@ -6,6 +6,13 @@ type steamAppList = {
 
 type steamApps = {
 
-    apps: [];
+    apps: [steamGameData];
+
+};
+
+type steamGameData = {
+
+    appid: string;
+    name: string;
 
 };
