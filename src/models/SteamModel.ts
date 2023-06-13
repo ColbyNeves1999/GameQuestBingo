@@ -43,12 +43,30 @@ async function steamAchievementGrab(): Promise<void> {
     const { achievementpercentages } = resJson as steamAchievementPercentage;
     const { achievements } = achievementpercentages as steamAchievements;
     const { achievement } = achievements;
-    for (let i = 0; i < 1; i++) {
+
+    for (let i = 0; i < achievement.length; i++) {
         const { name } = achievement[i];
         const newName = name.replace(/_/g, " ");
-        console.log(newName);
+        let finalName;
+        let temp = 0;
+        let position;
+        for (let i = 0; temp < 2; i++) {
+            if (newName[i] === " ") {
+                temp++;
+            }
+            if (temp === 2) {
+                position = i;
+            }
+        }
+        finalName = newName;
+        for (let i = 0; i <= position; i++) {
+            finalName = finalName.replace(newName[i], "");
+        }
+
+        console.log(finalName);
+
     }
-    console.log(achievement[0]);
+
     return;
 
 }
