@@ -30,4 +30,27 @@ async function steamGameGrab(): Promise<void> {
     return;
 }
 
-export { steamGameGrab };
+
+async function steamAchievementGrab(): Promise<void> {
+
+    const fetchResponse = await fetch('https://api.steampowered.com/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v1/?gameid=976730', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    });
+    const resJson = await fetchResponse.json();
+    const { achievementpercentages } = resJson as steamAchievementPercentage;
+    const { achievements } = achievementpercentages as steamAchievements;
+    const { achievement } = achievements;
+    for (let i = 0; i < 1; i++) {
+        const { name } = achievement[i];
+        const newName = name.replace(/_/g, " ");
+        console.log(newName);
+    }
+    console.log(achievement[0]);
+    return;
+
+}
+
+export { steamGameGrab, steamAchievementGrab };
