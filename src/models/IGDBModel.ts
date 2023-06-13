@@ -39,6 +39,8 @@ async function IGDBAuthorizationModel(email: string): Promise<string> {
 //Function gets the actual database list from IGDB
 async function IGDBGameDatabasePullModel(email: string): Promise<void> {
 
+    console.log("I am grabbing new games.");
+
     const user = await getUserByEmail(email);
 
     await IGDBPlatformDatabasePullModel(email);

@@ -18,6 +18,9 @@ export class Game {
     @Column({ default: null })
     console: string;
 
+    @Column({ default: null })
+    steamID: string;
+
     @OneToMany(() => Platform, (platform) => platform.game, { cascade: ['insert', 'update'] })
     platform: Relation<Platform>[];
 

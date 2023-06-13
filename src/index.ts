@@ -51,22 +51,22 @@ app.set('view engine', 'ejs');
 //Account register/login/data managment
 app.post('/registerUser', validateNewUserBody, registerUser); //Registers a user
 app.post('/login', validateLoginBody, logIn); //Lets a user login
-app.post('/IGBDAuth', IGDBAuthorization); //Allows a user to get IGDB Authorization (won't likely be used by user)
+app.post('/IGBDAuth', IGDBAuthorization); //Allows a user to get IGDB Authorization (won't likely be used by normal user)
 app.post('/getGameDatabase', IGDBGameDatabasePull); //Allows for the IGDB game database to be pulled
 
 //Page requests
-app.get('/getGames', getAllGames);
+app.get('/getGames', getAllGames); //Gets alist of all games
 
 //Xbox requests
 app.post("/xbox", xboxAuth);
 
 //User objectives
-app.post("/userObjectives", objectiveSubmittedPage);
-app.post("/createObjective", validateNewUserObj, objectiveSubmit);
+app.post("/userObjectives", objectiveSubmittedPage); //Takes users to page where they can submit objectives
+app.post("/createObjective", validateNewUserObj, objectiveSubmit); //Validates objectives and submits them
 
 //Bingo Page
-app.post("/bingoCreatorPage", bingoCreatorPage);
-app.post("/selectBingoObjectives", selectBingoObjectives);
+app.post("/bingoCreatorPage", bingoCreatorPage); //Takes users to page where they choose bingo parameters
+app.post("/selectBingoObjectives", selectBingoObjectives); //Chooses objectives for bingo card
 
 app.listen(PORT, () => {
     console.log(`Listening at http://localhost:${PORT}`);
