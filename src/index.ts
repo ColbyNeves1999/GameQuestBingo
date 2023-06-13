@@ -14,6 +14,7 @@ import { objectiveSubmittedPage, objectiveSubmit } from './controllers/UserObjec
 import { validateNewUserBody, validateLoginBody } from './validators/loginValidators';
 import { validateNewUserObj } from './validators/userObjectiveValidators';
 import { bingoCreatorPage, selectBingoObjectives } from './controllers/BingoController';
+import { steamGameGrabController } from './controllers/SteamController';
 
 const ADMIN_EMAIL = process.env.DATABASEADMIN_EMAIL;
 
@@ -59,6 +60,9 @@ app.get('/getGames', getAllGames); //Gets alist of all games
 
 //Xbox requests
 app.post("/xbox", xboxAuth);
+
+//Steam requests
+app.post("/steamGames", steamGameGrabController);
 
 //User objectives
 app.post("/userObjectives", objectiveSubmittedPage); //Takes users to page where they can submit objectives
