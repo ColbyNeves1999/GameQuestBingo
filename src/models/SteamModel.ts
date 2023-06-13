@@ -1,4 +1,4 @@
-import { getGameByName, setSteamID, addGame } from "./GameModel";
+import { getGameByName, setSteamID } from "./GameModel";
 
 async function steamGameGrab(): Promise<void> {
     const fetchResponse = await fetch('https://api.steampowered.com/ISteamApps/GetAppList/v2/', {

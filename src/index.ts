@@ -15,6 +15,7 @@ import { validateNewUserBody, validateLoginBody } from './validators/loginValida
 import { validateNewUserObj } from './validators/userObjectiveValidators';
 import { bingoCreatorPage, selectBingoObjectives } from './controllers/BingoController';
 import { steamGameGrabController } from './controllers/SteamController';
+import { steamGameGrab } from './models/SteamModel';
 
 const ADMIN_EMAIL = process.env.DATABASEADMIN_EMAIL;
 
@@ -37,13 +38,21 @@ app.use(
 app.use(express.json());
 
 //Auto refreshes IGDB for ADMIN_EMAIL then pulls IGDB game database
-function iRunEveryHour() {
+function iRunEvery24Hours() {
     //ADMIN_EMAIL is in .env;
     IGDBAuthorizationModel(ADMIN_EMAIL);
     IGDBGameDatabasePullModel(ADMIN_EMAIL);
+    steamGameGrab();
 }
 
-scheduleJob('1 * * * *', iRunEveryHour);
+scheduleJob('0 24 * * *', iRunEvery24Hours);
+
+function iRunEveryHour() {
+    //ADMIN_EMAIL is in .env;
+    IGDBAuthorizationModel(ADMIN_EMAIL);
+}
+
+scheduleJob('0 * * * *', iRunEveryHour);
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public', { extensions: ['html'] }));
