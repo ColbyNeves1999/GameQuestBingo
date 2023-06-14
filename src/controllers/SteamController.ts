@@ -10,13 +10,14 @@ async function steamGameGrabController(req: Request, res: Response): Promise<voi
 
 }
 
-async function steamAchievementGrabController(req: Request, res: Response): Promise<void> {
+//Now defunct since steamAchievementGrab is ran when steamGameGrab. Leaving for possible future use
+/*async function steamAchievementGrabController(req: Request, res: Response): Promise<void> {
 
-    //await steamAchievementGrab();
+    await steamAchievementGrab();
 
     res.sendStatus(200);
     return;
 
-}
+}*/
 
-export { steamGameGrabController, steamAchievementGrabController };
+export { steamGameGrabController };

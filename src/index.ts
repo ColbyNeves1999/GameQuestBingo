@@ -4,17 +4,22 @@ import express, { Express } from 'express';
 import session from 'express-session';
 import connectSqlite3 from 'connect-sqlite3';
 import { scheduleJob } from 'node-schedule';
-import { registerUser, logIn } from './controllers/UserController';
-import { IGDBAuthorization, IGDBGameDatabasePull } from './controllers/IGDBController';
-import { IGDBGameDatabasePullModel } from './models/IGDBModel';
-import { IGDBAuthorizationModel } from './models/IGDBModel';
+//Game related Imports
 import { getAllGames } from './controllers/GameController';
+//IGDB Imports
+import { IGDBAuthorization, IGDBGameDatabasePull } from './controllers/IGDBController';
+import { IGDBGameDatabasePullModel, IGDBAuthorizationModel } from './models/IGDBModel';
+//Xbox Imports
 import { xboxAuth } from './controllers/XboxController';
+//User related Imports
+import { registerUser, logIn } from './controllers/UserController';
 import { objectiveSubmittedPage, objectiveSubmit } from './controllers/UserObjectiveController';
 import { validateNewUserBody, validateLoginBody } from './validators/loginValidators';
 import { validateNewUserObj } from './validators/userObjectiveValidators';
+//Bingo Imports
 import { bingoCreatorPage, selectBingoObjectives } from './controllers/BingoController';
-import { steamGameGrabController, steamAchievementGrabController } from './controllers/SteamController';
+//Steam Imports
+import { steamGameGrabController } from './controllers/SteamController';
 import { steamGameGrab } from './models/SteamModel';
 
 const ADMIN_EMAIL = process.env.DATABASEADMIN_EMAIL;
@@ -47,13 +52,6 @@ function iRunEvery24Hours() {
 
 scheduleJob('1 24 * * *', iRunEvery24Hours);
 
-/*function iRunEveryHour() {
-    //ADMIN_EMAIL is in .env;
-    IGDBAuthorizationModel(ADMIN_EMAIL);
-}
-
-scheduleJob('0 * * * *', iRunEveryHour);*/
-
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public', { extensions: ['html'] }));
 app.set('view engine', 'ejs');
@@ -61,18 +59,17 @@ app.set('view engine', 'ejs');
 //Account register/login/data managment
 app.post('/registerUser', validateNewUserBody, registerUser); //Registers a user
 app.post('/login', validateLoginBody, logIn); //Lets a user login
-app.post('/IGBDAuth', IGDBAuthorization); //Allows a user to get IGDB Authorization (won't likely be used by normal user)
+app.post('/IGBDAuth', IGDBAuthorization); //Allows a user to get IGDB Authorization (will only be used by Admin emails)
 app.post('/getGameDatabase', IGDBGameDatabasePull); //Allows for the IGDB game database to be pulled
 
 //Page requests
 app.get('/getGames', getAllGames); //Gets alist of all games
 
 //Xbox requests
-app.post("/xbox", xboxAuth);
+app.post("/xbox", xboxAuth); //Link intended for authorizing the website to access specific Xbox data
 
 //Steam requests
-app.post("/steamGames", steamGameGrabController);
-app.post("/steamAchievements", steamAchievementGrabController);
+app.post("/steamGames", steamGameGrabController); //link for testing steamGameGrab
 
 //User objectives
 app.post("/userObjectives", objectiveSubmittedPage); //Takes users to page where they can submit objectives
