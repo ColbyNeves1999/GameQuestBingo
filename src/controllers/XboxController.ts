@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { xboxAuthModel } from '../models/XboxModel';
+//import { xboxAuthModel } from '../models/XboxModel';
 import { getUserByEmail } from '../models/UserModel';
 
 async function xboxAuth(req: Request, res: Response): Promise<void> {
