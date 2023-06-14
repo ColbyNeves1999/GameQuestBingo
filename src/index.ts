@@ -45,14 +45,14 @@ function iRunEvery24Hours() {
     steamGameGrab();
 }
 
-scheduleJob('0 24 * * *', iRunEvery24Hours);
+scheduleJob('1 24 * * *', iRunEvery24Hours);
 
-function iRunEveryHour() {
+/*function iRunEveryHour() {
     //ADMIN_EMAIL is in .env;
     IGDBAuthorizationModel(ADMIN_EMAIL);
 }
 
-scheduleJob('0 * * * *', iRunEveryHour);
+scheduleJob('0 * * * *', iRunEveryHour);*/
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public', { extensions: ['html'] }));

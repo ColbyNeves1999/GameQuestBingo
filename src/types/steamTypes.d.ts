@@ -1,8 +1,11 @@
+
 type steamAppList = {
 
     applist: steamApps;
 
 };
+
+
 
 type steamApps = {
 
@@ -21,22 +24,29 @@ type steamGameData = {
 
 type steamAchievementPercentage = {
 
+    game: steamGameStats;
     achievementpercentages: steamAchievements;
+
+};
+
+type steamGameStats = {
+
+    availableGameStats: steamAchievements
 
 };
 
 type steamAchievements = {
 
-    achievements: { achievement: [{ name: string }] };
+    achievements: [steamAchievementData];
 
 };
 
-/*type steamAchievementsInner = {
-    achievement: steamAchievementData;
-};
+/*type steamAchievement = {
+    achievement: steamAchievementData
+};*/
 
 type steamAchievementData = {
 
-    name: string;
+    displayName: string;
 
-};*/
+};

@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToMany, Relation } from 'typ
 
 import { Platform } from './Platforms';
 import { Objective } from './UserObjectiveList';
+import { SteamAchieve } from './SteamAchievement';
 
 @Entity()
 export class Game {
@@ -26,5 +27,8 @@ export class Game {
 
     @OneToMany(() => Objective, (objective) => objective.game, { cascade: ['insert', 'update'] })
     objectives: Relation<Objective>[];
+
+    @OneToMany(() => SteamAchieve, (steamachieve) => steamachieve.game, { cascade: ['insert', 'update'] })
+    steamachieve: Relation<SteamAchieve>[];
 
 }

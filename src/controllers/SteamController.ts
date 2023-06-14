@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { steamGameGrab, steamAchievementGrab } from '../models/SteamModel';
+import { steamGameGrab } from '../models/SteamModel';
 
 async function steamGameGrabController(req: Request, res: Response): Promise<void> {
 
@@ -12,7 +12,7 @@ async function steamGameGrabController(req: Request, res: Response): Promise<voi
 
 async function steamAchievementGrabController(req: Request, res: Response): Promise<void> {
 
-    await steamAchievementGrab();
+    //await steamAchievementGrab();
 
     res.sendStatus(200);
     return;
