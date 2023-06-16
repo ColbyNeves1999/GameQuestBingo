@@ -8,7 +8,7 @@ import { getGameByName, setSteamID } from "./GameModel";
 const steamAchievementRepository = AppDataSource.getRepository(SteamAchieve);
 
 async function steamGameGrab(): Promise<void> {
-
+    console.log("Checking steam for games and achievements");
     const fetchResponse = await fetch('https://api.steampowered.com/ISteamApps/GetAppList/v2/', {
         method: 'GET',
         headers: {

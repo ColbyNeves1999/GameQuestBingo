@@ -10,7 +10,7 @@ import { getAllGames } from './controllers/GameController';
 import { IGDBAuthorization, IGDBGameDatabasePull } from './controllers/IGDBController';
 import { IGDBGameDatabasePullModel, IGDBAuthorizationModel } from './models/IGDBModel';
 //Xbox Imports
-import { xboxAuth } from './controllers/XboxController';
+//import { xboxAuth } from './controllers/XboxController';
 //User related Imports
 import { registerUser, logIn } from './controllers/UserController';
 import { objectiveSubmittedPage, objectiveSubmit } from './controllers/UserObjectiveController';
@@ -47,10 +47,10 @@ function iRunEvery24Hours() {
     //ADMIN_EMAIL is in .env;
     IGDBAuthorizationModel(ADMIN_EMAIL);
     IGDBGameDatabasePullModel(ADMIN_EMAIL);
-    steamGameGrab();
+    //steamGameGrab(); //Gotta figure out time issue
 }
 
-scheduleJob('1 24 * * *', iRunEvery24Hours);
+scheduleJob('1 * * * *', iRunEvery24Hours);
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public', { extensions: ['html'] }));
@@ -66,7 +66,7 @@ app.post('/getGameDatabase', IGDBGameDatabasePull); //Allows for the IGDB game d
 app.get('/getGames', getAllGames); //Gets alist of all games
 
 //Xbox requests
-app.post("/xbox", xboxAuth); //Link intended for authorizing the website to access specific Xbox data
+//app.post("/xbox", xboxAuth); //Link intended for authorizing the website to access specific Xbox data
 
 //Steam requests
 app.post("/steamGames", steamGameGrabController); //link for testing steamGameGrab
