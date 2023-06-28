@@ -69,7 +69,7 @@ async function IGDBGameDatabasePullModel(email: string): Promise<void> {
         });
 
         const resJson = await fetchResponse.json();
-
+        console.log(resJson);
         if (resJson.length === 0) {
 
             loop = false;
