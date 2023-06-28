@@ -43,14 +43,14 @@ app.use(
 app.use(express.json());
 
 //Auto refreshes IGDB for ADMIN_EMAIL then pulls IGDB game database
-function iRunEvery1Hour() {
+function iRunEverySunday() {
     //ADMIN_EMAIL is in .env;
     IGDBAuthorizationModel(ADMIN_EMAIL);
     IGDBGameDatabasePullModel(ADMIN_EMAIL);
-    //steamGameGrab(); //Gotta figure out time issue
+    steamGameGrab();
 }
 
-//scheduleJob('1 * * * *', iRunEvery1Hour);
+scheduleJob('1 0 * * 7', iRunEverySunday);
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public', { extensions: ['html'] }));
