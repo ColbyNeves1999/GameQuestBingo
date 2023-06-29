@@ -33,7 +33,7 @@ async function steamGameGrab(): Promise<void> {
         if (isItAlreadyHere) {
 
             await setSteamID(appid, isItAlreadyHere);
-            await steamAchievementGrab(appid, isItAlreadyHere);
+            //await steamAchievementGrab(appid, isItAlreadyHere);
 
         }
 
@@ -85,6 +85,7 @@ async function steamAchievementGrab(appid: string, steamGame: Game): Promise<voi
 
     if (availableGameStats !== null && availableGameStats !== undefined) {
         const { achievements } = availableGameStats;
+
         //Due to the funky way Steam reports some achievements I had to use this if statement
         if (achievements !== null && achievements !== undefined && achievements[0] !== null && achievements[0] !== undefined) {
 

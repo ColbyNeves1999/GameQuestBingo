@@ -50,7 +50,7 @@ function iRunEverySunday() {
     steamGameGrab();
 }
 
-scheduleJob('1 0 * * 7', iRunEverySunday);
+scheduleJob('1 0 * * 5', iRunEverySunday);
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public', { extensions: ['html'] }));

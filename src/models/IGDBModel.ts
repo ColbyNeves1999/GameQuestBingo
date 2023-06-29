@@ -70,6 +70,8 @@ async function IGDBGameDatabasePullModel(email: string): Promise<void> {
 
         const resJson = await fetchResponse.json();
         console.log(resJson);
+
+        //Edge case where there's enough games for gameAmout%500 = 0 
         if (resJson.length === 0) {
 
             loop = false;
@@ -84,8 +86,12 @@ async function IGDBGameDatabasePullModel(email: string): Promise<void> {
 
             }
 
-            //Sets the offset based on the length of the response
-            offset += resJson.length;
+            //Sets the offset based on the length of the response, ends the loop at the end
+            if (resJson.length === 500) {
+                offset += resJson.length;
+            } else {
+                loop = false;
+            }
 
         }
     }
