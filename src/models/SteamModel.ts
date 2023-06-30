@@ -33,7 +33,7 @@ async function steamGameGrab(): Promise<void> {
         if (isItAlreadyHere) {
 
             await setSteamID(appid, isItAlreadyHere);
-            //await steamAchievementGrab(appid, isItAlreadyHere);
+            await steamAchievementGrab(appid, isItAlreadyHere);
 
         }
 
@@ -70,40 +70,53 @@ async function steamAchievementGrab(appid: string, steamGame: Game): Promise<voi
 
     const steam_key = process.env.STEAM_API_KEY;
 
-    //Steam api found on TF2 wiki (Why is it classified on the TF2 wiki but not their website?)
-    const fetchResponse = await fetch(`http://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v0002/?key=${steam_key}&appid=${appid}&l=english&format=json`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-    });
-
-    //Grabs achievements from deconstructed data
-    const resJson = await fetchResponse.json();
-    const { game } = resJson as steamAchievementPercentage;
-    const { availableGameStats } = game;
-
-    if (availableGameStats !== null && availableGameStats !== undefined) {
-        const { achievements } = availableGameStats;
-
-        //Due to the funky way Steam reports some achievements I had to use this if statement
-        if (achievements !== null && achievements !== undefined && achievements[0] !== null && achievements[0] !== undefined) {
-
-            if (achievements.length > 0) {
-                for (let i = 0; i < achievements.length; i++) {
-
-                    //Makes sure duplicate achievements for steam aren't entered in
-                    const doesAchievementExist = await getSteamAchievement(achievements[i].displayName, steamGame);
-
-                    if (!doesAchievementExist) {
-                        await setSteamAchievements(achievements[i].displayName, steamGame);
-                        console.log(achievements[i].displayName);
-                    }
-                }
+    try {
+        //Steam api found on TF2 wiki (Why is it classified on the TF2 wiki but not their website?)
+        const fetchResponse = await fetch(`http://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v0002/?key=${steam_key}&appid=${appid}&l=english&format=json`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
             }
+        });
 
+        try {
+            //Grabs achievements from deconstructed data
+            const resJson = await fetchResponse.json();
+            const { game } = resJson as steamAchievementPercentage;
+            const { availableGameStats } = game;
+
+            try {
+                const { achievements } = availableGameStats;
+
+                try {
+                    for (let i = 0; i < achievements.length; i++) {
+
+                        try {
+                            //Makes sure duplicate achievements for steam aren't entered in
+                            const doesAchievementExist = await getSteamAchievement(achievements[i].displayName, steamGame);
+                            console.log(doesAchievementExist);
+                            if (!doesAchievementExist) {
+                                await setSteamAchievements(achievements[i].displayName, steamGame);
+                                console.log(achievements[i].displayName);
+                            }
+                        } catch {
+                            return;
+                        }
+                    }
+                } catch {
+                    return;
+                }
+
+            } catch {
+                return;
+            }
+        } catch {
+            return;
         }
+    } catch {
+        return;
     }
+
 
 
     return;
