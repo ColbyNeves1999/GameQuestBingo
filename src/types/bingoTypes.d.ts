@@ -1,6 +1,7 @@
 type bingoPara = {
 
     title: string,
-    size: number
+    size: number,
+    inex: number,
 
 };

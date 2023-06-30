@@ -1,11 +1,13 @@
 import { AppDataSource } from '../dataSource';
 import { Objective } from '../entities/UserObjectiveList';
+import { SteamAchieve } from '../entities/SteamAchievement';
 
 import { getGameByName } from './GameModel';
 
 const objectiveRepository = AppDataSource.getRepository(Objective);
+const steamRepository = AppDataSource.getRepository(SteamAchieve);
 
-async function bingoSelector(size: number, title: string): Promise<string[] | null> {
+async function bingoSelector(size: number, title: string, inex: number): Promise<string[] | null> {
 
     //Ends function if requested game doesn't exist
     const game = await getGameByName(title);
@@ -15,17 +17,38 @@ async function bingoSelector(size: number, title: string): Promise<string[] | nu
 
     }
 
+    const bingoArray: string[] = [];
+    let listOfObjectives;
+    let listOfAchievements;
     const gameID = game.gameId;
-    //Makes an array of objectives for the given game
-    const listOfObjectives = await objectiveRepository
-        .createQueryBuilder('objectives')
+
+    listOfAchievements = await steamRepository
+        .createQueryBuilder('steamAchieve')
         .where('gameGameID = :gameID', { gameID })
         .getMany();
-    const objLen = listOfObjectives.length;
-    const bingoArray: string[] = [];
+
+    console.log(inex);
+    if (inex == 1) {
+        //Makes an array of objectives for the given game with user objectives
+        listOfObjectives = await objectiveRepository
+            .createQueryBuilder('objectives')
+            .where('gameGameID = :gameID', { gameID })
+            .getMany();
+        console.log(listOfObjectives.length);
+    }
+
+    const achLen = listOfAchievements.length;
+    console.log(achLen);
+    let objLen;
+    try {
+        objLen = listOfObjectives.length;
+    } catch {
+        objLen = 0;
+    }
+    console.log(objLen);
 
     //Makes sure there are some objectives for the game
-    if (listOfObjectives.length == 0) {
+    if (achLen + objLen == 0) {
 
         return null;
 
@@ -44,17 +67,19 @@ async function bingoSelector(size: number, title: string): Promise<string[] | nu
         return null;
     }
 
-    //Prevents bingo cards bigger than number of objectives
-    if (size == 9 && objLen < 81 && objLen >= 25) {
-        bingoObjectives = 25;
-    } else if (size == 9 && objLen < 25 && objLen >= 9) {
-        bingoObjectives = 9
-    } else if (size == 5 && objLen < 25 && objLen >= 9) {
-        bingoObjectives = 9;
-    }
-
+    console.log(bingoObjectives);
+    /*
+        //Prevents bingo cards bigger than number of objectives
+        if (size == 9 && objLen < 81 && objLen >= 25) {
+            bingoObjectives = 25;
+        } else if (size == 9 && objLen < 25 && objLen >= 9) {
+            bingoObjectives = 9
+        } else if (size == 5 && objLen < 25 && objLen >= 9) {
+            bingoObjectives = 9;
+        }
+    */
     //Generates an array of objectives based on the size determined before
-    for (let i = 0; i < bingoObjectives; i++) {
+    /*for (let i = 0; i < bingoObjectives; i++) {
 
         //Determines random objective from list determined earlier
         let addedObj = listOfObjectives[Math.floor(Math.random() * objLen)];
@@ -67,7 +92,7 @@ async function bingoSelector(size: number, title: string): Promise<string[] | nu
             bingoArray[i] = addedObj.objective;
         }
 
-    }
+    }*/
 
     return bingoArray;
 
