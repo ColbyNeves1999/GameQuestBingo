@@ -13,6 +13,12 @@
     <form id="setDevice" method="GET" action="/index">
         <button>Home</button>
     </form>
+    <form method="POST" action="/selectBingoObjectives">
+        <input type="radio" id="3x3" name="size" value="<%=size%>" hidden checked>
+        <input type="radio" id="title" name="title" value="<%=title%>" hidden checked>
+        <input type="radio" id="excludeUsers" name="inex" value="<%=inex%>" hidden checked>
+        <button class="btn">Refresh</button>
+    </form>
     <%= bingoArray %>
 </body>
 

@@ -7,7 +7,7 @@ import { getGameByName } from './GameModel';
 const objectiveRepository = AppDataSource.getRepository(Objective);
 const steamRepository = AppDataSource.getRepository(SteamAchieve);
 
-async function bingoSelector(size: number, title: string, inex: number): Promise<string[] | null> {
+async function bingoSelector(size: number, title: string, inex: number): Promise<(string)[] | null> {
 
     //Ends function if requested game doesn't exist
     const game = await getGameByName(title);
@@ -17,7 +17,7 @@ async function bingoSelector(size: number, title: string, inex: number): Promise
 
     }
 
-    const bingoArray: string[] = [];
+    const bingoArray: (string)[] = [];
     let listOfObjectives;
     let listOfAchievements;
     const gameID = game.gameId;
@@ -68,32 +68,49 @@ async function bingoSelector(size: number, title: string, inex: number): Promise
     }
 
     console.log(bingoObjectives);
-    /*
-        //Prevents bingo cards bigger than number of objectives
-        if (size == 9 && objLen < 81 && objLen >= 25) {
-            bingoObjectives = 25;
-        } else if (size == 9 && objLen < 25 && objLen >= 9) {
-            bingoObjectives = 9
-        } else if (size == 5 && objLen < 25 && objLen >= 9) {
-            bingoObjectives = 9;
-        }
-    */
-    //Generates an array of objectives based on the size determined before
-    /*for (let i = 0; i < bingoObjectives; i++) {
 
-        //Determines random objective from list determined earlier
-        let addedObj = listOfObjectives[Math.floor(Math.random() * objLen)];
+    //Prevents bingo cards bigger than number of objectives
+    if (size == 9 && (objLen + achLen) < 81 && (objLen + achLen) >= 25) {
+        bingoObjectives = 25;
+    } else if (size == 9 && (objLen + achLen) < 25 && (objLen + achLen) >= 9) {
+        bingoObjectives = 9
+    } else if (size == 5 && (objLen + achLen) < 25 && (objLen + achLen) >= 9) {
+        bingoObjectives = 9;
+    }
+
+    console.log(bingoObjectives);
+
+    //Generates an array of objectives based on the size determined before
+    for (let i = 0; i < bingoObjectives; i++) {
+
+        //Generates random number from 0 to <(objLen + achLen) is
+        let ranNum = Math.floor(Math.random() * (objLen + achLen));
+        let addedObj;
+
+        if (ranNum > (achLen - 1)) {
+            ranNum = Math.floor(Math.random() * objLen);
+
+            //Determines random objective from list determined earlier
+            addedObj = listOfObjectives[ranNum].objective;
+
+        } else {
+
+            addedObj = listOfAchievements[ranNum].achievement;
+
+        }
+        console.log(ranNum);
 
         if (bingoArray.length == 0) {
-            bingoArray[0] = addedObj.objective;
-        } else if (bingoArray.includes(addedObj.objective)) {
+            bingoArray[0] = addedObj;
+        } else if (bingoArray.includes(addedObj)) {
             i--;
         } else {
-            bingoArray[i] = addedObj.objective;
+            bingoArray[i] = addedObj;
         }
 
-    }*/
+    }
 
+    console.log(bingoArray);
     return bingoArray;
 
 }
