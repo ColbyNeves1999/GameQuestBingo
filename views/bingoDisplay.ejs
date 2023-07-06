@@ -10,27 +10,21 @@
 </head>
 
 <body>
-    <div class="btn-left">
+    <div class="btn-center">
         <form id="setDevice" method="GET" action="/index">
-            <button class="btn2">Home</button>
+            <button class="btn1">Home</button>
         </form>
+    </div>
+    <div style="padding-top: 10px;" class="btn-center">
+        <form method="POST" action="/bingoCreatorPage"><button class="btn1">Bingo Creator</button></form>
     </div>
 
     <div class="btn-center">
         <h1>Bingo Card Display</h1>
     </div>
-    <div class="btn-center" style="padding-bottom: 10px;">
-        <form method="POST" action="/selectBingoObjectives">
-            <input type="radio" id="3x3" name="size" value="<%=size%>" hidden checked>
-            <input type="radio" id="free" name="free" value="<%=free%>" hidden checked>
-            <input type="radio" id="title" name="title" value="<%=title%>" hidden checked>
-            <input type="radio" id="excludeUsers" name="inex" value="<%=inex%>" hidden checked>
-            <button class="btn1">Refresh</button>
-        </form>
-    </div>
 
-    <div class="btn-center">
-        <table border="1">
+    <div class="padding1">
+        <table border="1" class="center1">
             <% if(size==3){ %>
                 <tr>
                     <th>B</th>
@@ -58,18 +52,55 @@
                             <th>D</th>
                         </tr>
                         <%}%>
+                            <%spot=0%>
+                                <%for(let i=1; i <=size; i++) {%>
+                                    <tr>
+                                        <%while(spot < (size*i)) { %>
+
+                                            <td class="bingobox1">
+                                                <%if(bingoArray[spot]==="Free Space" ){ %>
+                                                    <%=bingoArray[spot]%>
+                                                        <%} else { %>
+                                                            Collect the "<%=bingoArray[spot]%>" Achievement
+                                                                <%}%>
+                                            </td>
+                                            <%spot=spot + 1%>
+                                                <%}%>
+                                    </tr>
+                                    <%}%>
 
         </table>
     </div>
-    <%for(let i=0; i < (size*size); i++) { %>
-        <div>
-            <%if(bingoArray[i]==="Free Space" ){%>
-                <%=bingoArray[i]%>
-                    <%} else {%>
-                        Get the "<%=bingoArray[i]%>" achievement.
-                            <%}%>
-        </div>
-        <%}%>
+
+    <div class="btn-center" style="padding-bottom: 10px;">
+        <form method="POST" action="/selectBingoObjectives">
+            <div class="btn-center">
+                <input type="radio" id="3x3" name="size" value="3">
+                <label for="3x3">3x3</label>
+                <input type="radio" id="5x5" name="size" value="5" checked>
+                <label for="5x5">5x5</label>
+                <input type="radio" id="9x9" name="size" value="9">
+                <label for="9x9">9x9</label>
+            </div>
+            <div class="btn-center">
+                <input type="radio" id="excludeFree" name="free" value="0" checked>
+                <label for="excludeFree">Exclude Free Space</label>
+                <input type="radio" id="includeFree" name="free" value="1">
+                <label for="includeFree">Include Free Space</label>
+            </div>
+            <input type="radio" id="title" name="title" value="<%=title%>" hidden checked>
+            <div class="btn-center">
+                <input type="radio" id="excludeUsers" name="inex" value="0" checked>
+                <label for="excludeUsers">Exclude User Objectives</label>
+                <input type="radio" id="includeUsers" name="inex" value="1">
+                <label for="includeUsers">Include User Objectives</label>
+            </div>
+            <div style="padding-top: 5px;">
+                <button class="btn1">Refresh</button>
+            </div>
+        </form>
+    </div>
+
 
 
 </body>

@@ -35,3 +35,20 @@
 .btn-left {
   text-align: left;
 }
+
+.center1 {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.bingobox1 {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  width: 100px;
+  height: 100px;
+}
+
+.padding1 {
+  padding-top: 10px;
+}
