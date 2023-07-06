@@ -28,7 +28,50 @@
             <button class="btn1">Refresh</button>
         </form>
     </div>
-    <%= bingoArray %>
+
+    <div class="btn-center">
+        <table border="1">
+            <% if(size==3){ %>
+                <tr>
+                    <th>B</th>
+                    <th>G</th>
+                    <th>O</th>
+                </tr>
+                <%} else if(size==5) {%>
+                    <tr>
+                        <th>B</th>
+                        <th>I</th>
+                        <th>N</th>
+                        <th>G</th>
+                        <th>O</th>
+                    </tr>
+                    <%} else {%>
+                        <tr>
+                            <th>B</th>
+                            <th>I</th>
+                            <th>N</th>
+                            <th>G</th>
+                            <th>O</th>
+                            <th>C</th>
+                            <th>A</th>
+                            <th>R</th>
+                            <th>D</th>
+                        </tr>
+                        <%}%>
+
+        </table>
+    </div>
+    <%for(let i=0; i < (size*size); i++) { %>
+        <div>
+            <%if(bingoArray[i]==="Free Space" ){%>
+                <%=bingoArray[i]%>
+                    <%} else {%>
+                        Get the "<%=bingoArray[i]%>" achievement.
+                            <%}%>
+        </div>
+        <%}%>
+
+
 </body>
 
 
