@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Objective List</title>
+    <link rel="stylesheet" href="/css/style.css" />
 </head>
 
 <body>
@@ -14,20 +15,31 @@
         <%= errorOcc%>
     </h1>
 
-    <form id="setDevice" method="GET" action="/index">
-        <button>Home</button>
-    </form>
+    <div class="btn-left">
+        <form id="setDevice" method="GET" action="/index">
+            <button class="btn2">Home</button>
+        </form>
+    </div>
 
-    <form method="POST" action="/createObjective">
-        <!-- calls the post method to login the user to the server -->
-        <label for="title"></label>
-        <input class="input" type="title" name="title" id="title" placeholder="title" required>
-        <label class="input" for="objective"></label>
-        <input class="input" type="objective" name="objective" id="objective" placeholder="objective" required>
-        <div>
-            <button class="btn">Submit</button>
-        </div>
-    </form>
+    <div class="btn-center">
+        <h1 class="header1">Submit an objective</h1>
+    </div>
+
+    <div class="btn-center">
+        <form method="POST" action="/createObjective">
+            <!-- calls the post method to login the user to the server -->
+            <div style="padding-bottom: 10px;">
+                <label for="title"></label>
+                <input class="input" type="title" name="title" id="title" placeholder="title" required>
+                <label class="input" for="objective"></label>
+                <input class="input" type="objective" name="objective" id="objective" placeholder="objective" required>
+            </div>
+            <div>
+                <button class="btn1">Submit</button>
+            </div>
+
+        </form>
+    </div>
 
 </body>
 

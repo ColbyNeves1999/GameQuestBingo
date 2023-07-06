@@ -6,34 +6,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Bingo Creator</title>
+    <link rel="stylesheet" href="/css/style.css" />
 </head>
 
 <body>
-    <h1>Bingo Creator Page</h1>
-    <form id="setDevice" method="GET" action="/index">
-        <button>Home</button>
-    </form>
-    <%= stateOfGame %>
-        <div>
-            <form method="POST" action="/selectBingoObjectives">
+    <div class="btn-left">
+        <form id="setDevice" method="GET" action="/index">
+            <button class="btn2">Home</button>
+        </form>
+    </div>
+
+    <div class="btn-center">
+        <h1 class="header1">Bingo Creator Page</h1>
+    </div>
+
+    <div class="btn-center">
+        <%= stateOfGame %>
+    </div>
+
+    <div>
+        <form method="POST" action="/selectBingoObjectives">
+            <div class="btn-center">
                 <input type="radio" id="3x3" name="size" value="3">
                 <label for="3x3">3x3</label>
                 <input type="radio" id="5x5" name="size" value="5" checked>
                 <label for="5x5">5x5</label>
                 <input type="radio" id="9x9" name="size" value="9">
                 <label for="9x9">9x9</label>
-
+            </div>
+            <div class="btn-center">
+                <input type="radio" id="excludeFree" name="free" value="0" checked>
+                <label for="excludeFree">Exclude Free Space</label>
+                <input type="radio" id="includeFree" name="free" value="1">
+                <label for="includeFree">Include Free Space</label>
+            </div>
+            <div class="btn-center">
                 <label class="input" for="title"></label>
                 <input class="input" type="title" name="title" id="title" placeholder="title" required>
-
+            </div>
+            <div class="btn-center">
                 <input type="radio" id="excludeUsers" name="inex" value="0" checked>
                 <label for="excludeUsers">Exclude User Objectives</label>
                 <input type="radio" id="includeUsers" name="inex" value="1">
                 <label for="includeUsers">Include User Objectives</label>
-
-                <button class="btn">Create card</button>
-            </form>
-        </div>
+            </div>
+            <div class="btn-center">
+                <button class="btn1">Create card</button>
+            </div>
+        </form>
+    </div>
 </body>
 
 

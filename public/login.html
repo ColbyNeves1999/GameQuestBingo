@@ -10,23 +10,24 @@
 </head>
 
 <body>
-    <h1>Please login</h1>
-    <form id="setDevice" method="GET" action="/index">
-        <button>Home</button>
-    </form>
-</body>
-
-<body>
+    <div class="btn-left">
+        <form id="setDevice" method="GET" action="/index">
+            <button class="btn2">Home</button>
+        </form>
+    </div>
 
     <div>
+        <h1 class="header1">Please Login</h1>
         <form method="POST" action="/login">
             <!-- calls the post method to login the user to the server -->
-            <label for="email"></label>
-            <input class="input" type="email" name="email" id="email" placeholder="Email" required>
-            <label class="input" for="password"></label>
-            <input class="input" type="password" name="password" id="password" placeholder="Password" required>
-            <div>
-                <button class="btn">Login</button>
+            <div class="btn-center">
+                <label for="email"></label>
+                <input class="input" type="email" name="email" id="email" placeholder="Email" required>
+                <label class="input" for="password"></label>
+                <input class="input" type="password" name="password" id="password" placeholder="Password" required>
+            </div>
+            <div class="btn-center">
+                <button class="btn1">Login</button>
             </div>
         </form>
     </div>

@@ -6,19 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Bingo Card Display</title>
+    <link rel="stylesheet" href="/css/style.css" />
 </head>
 
 <body>
-    <h1>Bingo Card Display</h1>
-    <form id="setDevice" method="GET" action="/index">
-        <button>Home</button>
-    </form>
-    <form method="POST" action="/selectBingoObjectives">
-        <input type="radio" id="3x3" name="size" value="<%=size%>" hidden checked>
-        <input type="radio" id="title" name="title" value="<%=title%>" hidden checked>
-        <input type="radio" id="excludeUsers" name="inex" value="<%=inex%>" hidden checked>
-        <button class="btn">Refresh</button>
-    </form>
+    <div class="btn-left">
+        <form id="setDevice" method="GET" action="/index">
+            <button class="btn2">Home</button>
+        </form>
+    </div>
+
+    <div class="btn-center">
+        <h1>Bingo Card Display</h1>
+    </div>
+    <div class="btn-center" style="padding-bottom: 10px;">
+        <form method="POST" action="/selectBingoObjectives">
+            <input type="radio" id="3x3" name="size" value="<%=size%>" hidden checked>
+            <input type="radio" id="free" name="free" value="<%=free%>" hidden checked>
+            <input type="radio" id="title" name="title" value="<%=title%>" hidden checked>
+            <input type="radio" id="excludeUsers" name="inex" value="<%=inex%>" hidden checked>
+            <button class="btn1">Refresh</button>
+        </form>
+    </div>
     <%= bingoArray %>
 </body>
 

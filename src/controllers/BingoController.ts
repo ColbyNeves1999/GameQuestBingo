@@ -13,10 +13,10 @@ async function bingoCreatorPage(req: Request, res: Response): Promise<void> {
 
 async function selectBingoObjectives(req: Request, res: Response): Promise<void> {
 
-    const { title, size, inex } = req.body as bingoPara;
+    const { title, size, inex, free } = req.body as bingoPara;
     const temp = title.toLowerCase();
 
-    const bingoArray = await bingoSelector(size, temp, inex);
+    const bingoArray = await bingoSelector(size, temp, inex, free);
 
     if (!bingoArray) {
         const stateOfGame = "Sorry, there are not enough objectives for this game to make a card. You can add your own though!";
@@ -24,7 +24,7 @@ async function selectBingoObjectives(req: Request, res: Response): Promise<void>
         return;
     }
 
-    res.render('bingoDisplay', { bingoArray, title, size, inex });
+    res.render('bingoDisplay', { bingoArray, title, size, inex, free });
     return;
 
 }

@@ -6,41 +6,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage</title>
+    <link rel="stylesheet" href="/css/style.css" />
 </head>
 
 
-<body class="homepage">
-    <h1 class="header1">Welcome to Student Device Manager</h1>
-</body>
+<body class="Homepage">
+    <div>
+        <h1 class="header1">Welcome to GameQuest Bingo</h1>
+    </div>
 
-<body class="homepage">
-    <h3>
-        <form action="/register"><button>Register</button></form>
-    </h3>
-</body>
+    <div class="btn-center">
+        <h3>
+            <form action="/register"><button class="btn1">Register</button></form>
+        </h3>
+        <h3>
+            <form action="/login"><button class="btn1">Login</button></form>
+        </h3>
+        <h3>
+            <form method="POST" action="/bingoCreatorPage"><button class="btn1">Bingo Creator</button></form>
+        </h3>
+        <h3>
+            <form method="POST" action="/userObjectives"><button class="btn1">Submit Objectives</button></form>
+        </h3>
+    </div>
 
-<body class="login">
-    <h3>
-        <form action="/login"><button>Login</button></form>
-    </h3>
-</body>
-
-<body class="gameListPage">
-    <h3>
-        <form method="GET" action="/getGames" hidden><button>List of Games</button></form>
-    </h3>
-</body>
-
-<body>
-    <h3>
-        <form method="POST" action="/userObjectives"><button>Submit Objectives</button></form>
-    </h3>
-</body>
-
-<body>
-    <h3>
-        <form method="POST" action="/bingoCreatorPage"><button>Bingo Creator</button></form>
-    </h3>
 </body>
 
 </html>

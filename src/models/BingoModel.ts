@@ -7,7 +7,7 @@ import { getGameByName } from './GameModel';
 const objectiveRepository = AppDataSource.getRepository(Objective);
 const steamRepository = AppDataSource.getRepository(SteamAchieve);
 
-async function bingoSelector(size: number, title: string, inex: number): Promise<(string)[] | null> {
+async function bingoSelector(size: number, title: string, inex: number, free: number): Promise<(string)[] | null> {
 
     //Ends function if requested game doesn't exist
     const game = await getGameByName(title);
@@ -108,7 +108,21 @@ async function bingoSelector(size: number, title: string, inex: number): Promise
             bingoArray[i] = addedObj;
         }
 
+        if (free == 1) {
+
+            if (bingoObjectives == 9) {
+                bingoArray[4] = "Free Space";
+            } else if (bingoObjectives == 25) {
+                bingoArray[12] = "Free Space";
+            } else if (bingoObjectives == 81) {
+                bingoArray[41] = "Free Space";
+            }
+
+        }
+
     }
+
+
 
     console.log(bingoArray);
     return bingoArray;

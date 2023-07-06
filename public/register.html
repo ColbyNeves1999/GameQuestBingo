@@ -6,25 +6,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
+    <link rel="stylesheet" href="/css/style.css" />
 </head>
 
 <body>
-    <h1>Please create your account</h1>
-    <form id="setDevice" method="GET" action="/index">
-        <button>Home</button>
-    </form>
-</body>
 
-<body>
+    <form id="setDevice" method="GET" action="/index">
+        <button class="btn2">Home</button>
+    </form>
+
     <div>
+        <h1 class="header1">Please create your account</h1>
         <form method="POST" action="/registerUser">
             <!-- calls the post method to register a user on the server -->
-            <label for="email"></label>
-            <input class="input" type="email" name="email" id="email" placeholder="Email" required>
-            <label for="password"></label>
-            <input class="input" type="password" name="password" id="password" placeholder="Password" required>
-            <div>
-                <button>Create Account</button>
+            <div class="btn-center">
+                <label for="email"></label>
+                <input class="input" type="email" name="email" id="email" placeholder="Email" required>
+                <label for="password"></label>
+                <input class="input" type="password" name="password" id="password" placeholder="Password" required>
+            </div>
+            <div class="btn-center">
+                <button class="btn1">Create Account</button>
             </div>
         </form>
     </div>
