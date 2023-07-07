@@ -27,6 +27,34 @@
   font-weight: bold;
 }
 
+.btnbox1 {
+  background-color: #ffffff;
+  transition: box-shadow 0.35s, top 0.3s, transform 0.45s;
+  transform: rotateX(0) rotateY(0) rotateZ(0);
+  width: 150px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  width: 100px;
+  height: 100px;
+}
+
+.btnbox2 {
+  background-color: #ffd000;
+  transition: box-shadow 0.35s, top 0.3s, transform 0.45s;
+  transform: rotateX(0) rotateY(0) rotateZ(0);
+  width: 150px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  width: 100px;
+  height: 100px;
+}
+
 .btn-center {
   padding-top: 20px;
   text-align: center;
@@ -51,4 +79,8 @@
 
 .padding1 {
   padding-top: 10px;
+}
+
+.textbox1 {
+  width: 300px;
 }
