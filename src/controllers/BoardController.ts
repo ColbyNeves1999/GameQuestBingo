@@ -1,6 +1,9 @@
 import { Request, Response } from 'express';
 import { bingoSelector } from '../models/BingoModel';
 
+import { Game } from '../models/Game';
+import { GameManager } from '../models/GameManager';
+
 type SSEClient = {
     userId: string;
     res: Response;
@@ -70,7 +73,7 @@ function renderBoard(req: Request, res: Response): void {
 
 async function selectBingoObjectives(req: Request, res: Response): Promise<void> {
 
-    const { title, size, inex, free } = req.body as bingoPara;
+    const { title, size, inex, free, gameCode } = req.body as bingoPara;
     const temp = title.toLowerCase();
 
     const bingoArray = await bingoSelector(size, temp, inex, free);
@@ -139,8 +142,9 @@ async function selectBingoObjectives(req: Request, res: Response): Promise<void>
         ];
     }
 
+    const newGame = new Game(gameCode);
+
     res.render('boardPage', { board, bal, binObj });
-    //res.render('bingoDisplay', { bingoArray, title, size, inex, free });
     return;
 
 }

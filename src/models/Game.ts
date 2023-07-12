@@ -12,12 +12,16 @@ class Game {
 
     board: boolean[][];
 
+    binObj: string[][];
+
     constructor(gameCode: string) {
         this.board = [
             [false, false, false],
             [false, false, false],
             [false, false, false],
         ];
+
+        this.binObj = [[]];
 
         this.gameCode = gameCode;
         this.players = [];

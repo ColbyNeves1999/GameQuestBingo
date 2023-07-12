@@ -4,5 +4,6 @@ type bingoPara = {
     size: number,
     inex: number,
     free: number,
+    gameCode: string,
 
 };
