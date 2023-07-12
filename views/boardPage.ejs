@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/boardStyle.css">
+    <script src="/js/board.js" defer></script>
+</head>
+
+<body>
+    <div id="board" class="board<%=bal%>">
+
+        <% for( let x=0; x < bal; x++ ) { %>
+            <% for( let y=0; y < bal; y++ ) { %>
+                <div <% /* We set the x and y coordinate of the cell so we can figure out which cell was clicked */ %>
+                    x="<%= x %>" y="<%= y %>"
+
+                            <% /* Set either the "chosen" or "empty" class for styling */ %>
+                                class="cell <%= board[x][y] ? 'chosen' : 'empty' %>">
+
+                                    <!-- Set the text for the cell -->
+                                    <%= board[x][y] ? 'chosen' : 'empty' %>
+                </div>
+                <% } %>
+                    <% } %>
+    </div>
+</body>
+
+</html>

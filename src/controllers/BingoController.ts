@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { bingoSelector } from '../models/BingoModel';
+//import { bingoSelector } from '../models/BingoModel';
 
 async function bingoCreatorPage(req: Request, res: Response): Promise<void> {
 
@@ -11,7 +11,7 @@ async function bingoCreatorPage(req: Request, res: Response): Promise<void> {
 
 }
 
-async function selectBingoObjectives(req: Request, res: Response): Promise<void> {
+/*async function selectBingoObjectives(req: Request, res: Response): Promise<void> {
 
     const { title, size, inex, free } = req.body as bingoPara;
     const temp = title.toLowerCase();
@@ -24,9 +24,12 @@ async function selectBingoObjectives(req: Request, res: Response): Promise<void>
         return;
     }
 
-    res.render('bingoDisplay', { bingoArray, title, size, inex, free });
+
+
+    res.render('boardPage',{})
+    //res.render('bingoDisplay', { bingoArray, title, size, inex, free });
     return;
 
-}
+}*/
 
-export { selectBingoObjectives, bingoCreatorPage };
+export { bingoCreatorPage };

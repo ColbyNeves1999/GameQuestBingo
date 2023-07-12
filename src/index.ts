@@ -17,10 +17,12 @@ import { objectiveSubmittedPage, objectiveSubmit } from './controllers/UserObjec
 import { validateNewUserBody, validateLoginBody } from './validators/loginValidators';
 import { validateNewUserObj } from './validators/userObjectiveValidators';
 //Bingo Imports
-import { bingoCreatorPage, selectBingoObjectives } from './controllers/BingoController';
+import { bingoCreatorPage } from './controllers/BingoController';
 //Steam Imports
 import { steamGameGrabController } from './controllers/SteamController';
 import { steamGameGrab } from './models/SteamModel';
+//Bingo Page Imports
+import { renderBoard, subscribeToUpdates, updateBoard, selectBingoObjectives } from './controllers/BoardController';
 
 const ADMIN_EMAIL = process.env.DATABASEADMIN_EMAIL;
 
@@ -78,6 +80,10 @@ app.post("/createObjective", validateNewUserObj, objectiveSubmit); //Validates o
 //Bingo Page
 app.post("/bingoCreatorPage", bingoCreatorPage); //Takes users to page where they choose bingo parameters
 app.post("/selectBingoObjectives", selectBingoObjectives); //Chooses objectives for bingo card
+
+app.get('/board', renderBoard); //Board rendering code. Basis Provided by Christopher Saldivar
+app.get('/board/subscribe', subscribeToUpdates); //Board update subscription code. Basis Provided by Christopher Saldivar
+app.post('/board', updateBoard); //Board update code. Basis Provided by Christopher Saldivar
 
 app.listen(PORT, () => {
     console.log(`Listening at http://localhost:${PORT}`);

@@ -16,6 +16,7 @@ bs.init({
   reloadOnRestart: true,
   ui: false,
   logLevel: 'silent',
+  ghostMode: false, // ADD THIS LINE IF IT ISN'T THERE
 });
 
 const uiPort = bs.getOption('port');

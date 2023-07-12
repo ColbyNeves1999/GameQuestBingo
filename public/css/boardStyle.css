@@ -1,0 +1,31 @@
+.board3 {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    gap: 10px;
+    place-content: center;
+}
+
+.board5 {
+    display: grid;
+    grid-template-columns: repeat(5, 100px);
+    grid-template-rows: repeat(5, 100px);
+    gap: 10px;
+    place-content: center;
+}
+
+.board9 {
+    display: grid;
+    grid-template-columns: repeat(9, 100px);
+    grid-template-rows: repeat(9, 100px);
+    gap: 10px;
+    place-content: center;
+}
+
+.chosen {
+    background-color: rgb(146, 222, 146);
+}
+
+.empty {
+    background-color: rgb(244, 92, 92);
+}
