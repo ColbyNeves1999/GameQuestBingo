@@ -10,21 +10,25 @@
 </head>
 
 <body>
-    <div id="board" class="board<%=bal%>">
+    <div id="board" class="board<%=game.bal%>">
 
-        <% for( let x=0; x < bal; x++ ) { %>
-            <% for( let y=0; y < bal; y++ ) { %>
+        <% for( let x=0; x < game.bal; x++ ) { %>
+            <% for( let y=0; y < game.bal; y++ ) { %>
                 <div <% /* We set the x and y coordinate of the cell so we can figure out which cell was clicked */ %>
-                    x="<%= x %>" y="<%= y %>" z = "<%= bal %>"
+                    x="<%= x %>" y="<%= y %>" z = "<%= game.bal %>"
 
                                 <% /* Set either the "chosen" or "empty" class for styling */ %>
-                                    class="cell <%= board[x][y] ? 'chosen' : 'empty' %>">
+                                    class="cell <%= game.board[x][y] ? 'chosen' : 'empty' %>">
 
                                         <!-- Set the text for the cell -->
-                                        <%= binObj[x][y] %>
+                                        <%= game.binObj[x][y] %>
                 </div>
                 <% } %>
                     <% } %>
+
+                        <% for( let i=0; i < game.players.length; i++) {%>
+                            <%= game.players[i].userId %>
+                                <% } %>>
     </div>
 </body>
 

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { bingoSelector } from '../models/BingoModel';
 
-import { Game } from '../models/Game';
+//import { Game } from '../models/Game';
 import { GameManager } from '../models/GameManager';
 
 type SSEClient = {
@@ -53,7 +53,7 @@ function broadcastUpdate(data: unknown): void {
 }
 
 function updateBoard(req: Request, res: Response): void {
-    console.log(req.body);
+
     const { x, y, z } = req.body as { x: number; y: number; z: number };
 
     board[x][y] = !board[x][y]; // toggle the cell
@@ -71,6 +71,20 @@ function renderBoard(req: Request, res: Response): void {
     res.render('boardPage', { board });
 }
 
+function bingoJoinPage(req: Request, res: Response): void {
+    res.render('bingoJoin', {});
+}
+
+function sessionJoin(req: Request, res: Response): void {
+
+    const { gameCode } = req.body as bingoPara;
+
+    const game = GameManager.getGame(gameCode); // to get a game
+
+    res.render('boardPage', { game });
+
+}
+
 async function selectBingoObjectives(req: Request, res: Response): Promise<void> {
 
     const { title, size, inex, free, gameCode } = req.body as bingoPara;
@@ -84,6 +98,7 @@ async function selectBingoObjectives(req: Request, res: Response): Promise<void>
         return;
     }
 
+    //bal stands for bingo array length
     let bal = 3;
 
     if (bingoArray.length == 25) {
@@ -142,11 +157,16 @@ async function selectBingoObjectives(req: Request, res: Response): Promise<void>
         ];
     }
 
-    const newGame = new Game(gameCode);
+    GameManager.createNewGame(gameCode); // to add a new game
+    const game = GameManager.getGame(gameCode); // to get a game
+    game.board = board;
+    game.binObj = binObj;
+    game.bal = bal;
 
-    res.render('boardPage', { board, bal, binObj });
-    return;
+    game.addPlayer(req.session.authenticatedUser.email, res);
+
+    res.render('boardPage', { game });
 
 }
 
-export { subscribeToUpdates, updateBoard, renderBoard, selectBingoObjectives };
+export { subscribeToUpdates, updateBoard, renderBoard, selectBingoObjectives, bingoJoinPage, sessionJoin };

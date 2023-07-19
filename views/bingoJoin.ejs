@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Bingo Creator</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+
+<body>
+    <div class="btn-left">
+        <form id="setDevice" method="GET" action="/index">
+            <button class="btn2">Home</button>
+        </form>
+    </div>
+
+    <div class="btn-center">
+        <h1 class="header1">Bingo Room Join</h1>
+    </div>
+
+    <div>
+        <form method="POST" action="/sessionJoin">
+            <div class="btn-center">
+                <label class="textbox1" for="gameCode"></label>
+                <input class="textbox1" type="gameCode" name="gameCode" id="gameCode" placeholder="Room Code" required>
+            </div>
+            <div class="btn-center">
+                <button class="btn1">Join Room</button>
+            </div>
+        </form>
+    </div>
+
+</body>
+
+</html>

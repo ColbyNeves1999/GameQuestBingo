@@ -14,6 +14,8 @@ class Game {
 
     binObj: string[][];
 
+    bal: number;
+
     constructor(gameCode: string) {
         this.board = [
             [false, false, false],
@@ -22,6 +24,8 @@ class Game {
         ];
 
         this.binObj = [[]];
+
+        this.bal = 3;
 
         this.gameCode = gameCode;
         this.players = [];

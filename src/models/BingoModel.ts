@@ -27,25 +27,22 @@ async function bingoSelector(size: number, title: string, inex: number, free: nu
         .where('gameGameID = :gameID', { gameID })
         .getMany();
 
-    //console.log(inex);
     if (inex == 1) {
         //Makes an array of objectives for the given game with user objectives
         listOfObjectives = await objectiveRepository
             .createQueryBuilder('objectives')
             .where('gameGameID = :gameID', { gameID })
             .getMany();
-        //console.log(listOfObjectives.length);
     }
 
     const achLen = listOfAchievements.length;
-    //console.log(achLen);
+
     let objLen;
     try {
         objLen = listOfObjectives.length;
     } catch {
         objLen = 0;
     }
-    //console.log(objLen);
 
     //Makes sure there are some objectives for the game
     if (achLen + objLen == 0) {
@@ -67,8 +64,6 @@ async function bingoSelector(size: number, title: string, inex: number, free: nu
         return null;
     }
 
-    //console.log(bingoObjectives);
-
     //Prevents bingo cards bigger than number of objectives
     if (size == 9 && (objLen + achLen) < 81 && (objLen + achLen) >= 25) {
         bingoObjectives = 25;
@@ -77,8 +72,6 @@ async function bingoSelector(size: number, title: string, inex: number, free: nu
     } else if (size == 5 && (objLen + achLen) < 25 && (objLen + achLen) >= 9) {
         bingoObjectives = 9;
     }
-
-    //console.log(bingoObjectives);
 
     //Generates an array of objectives based on the size determined before
     for (let i = 0; i < bingoObjectives; i++) {
@@ -98,7 +91,6 @@ async function bingoSelector(size: number, title: string, inex: number, free: nu
             addedObj = listOfAchievements[ranNum].achievement;
 
         }
-        //console.log(ranNum);
 
         if (bingoArray.length == 0) {
             bingoArray[0] = addedObj;
@@ -122,9 +114,6 @@ async function bingoSelector(size: number, title: string, inex: number, free: nu
 
     }
 
-
-
-    //console.log(bingoArray);
     return bingoArray;
 
 }

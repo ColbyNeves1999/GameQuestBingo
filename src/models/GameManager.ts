@@ -1,7 +1,7 @@
 import { Game } from './Game';
 
 class GameManager {
-    private static games: Record<string, Game>;
+    static games: Record<string, Game> = {};
 
     static createNewGame(gameCode: string): void {
         GameManager.games[gameCode] = new Game(gameCode);
