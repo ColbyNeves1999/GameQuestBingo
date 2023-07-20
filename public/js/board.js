@@ -6,6 +6,7 @@ const boardEvents = new EventSource('/board/subscribe');
 // Get all cells
 const cells = Array.from(document.querySelectorAll('.cell'));
 
+
 // Run this function when we receive an update on the cells state
 boardEvents.onmessage = (e) => {
     // `e.data` will be the text from the string in BoardController.ts

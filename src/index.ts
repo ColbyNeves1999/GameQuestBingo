@@ -24,7 +24,10 @@ import { steamGameGrab } from './models/SteamModel';
 //Bingo Page Imports
 import { renderBoard, subscribeToUpdates, updateBoard, selectBingoObjectives, bingoJoinPage, sessionJoin } from './controllers/BoardController';
 
+//import { clearEmptyBoards } from './models/BoardModel';
+
 const ADMIN_EMAIL = process.env.DATABASEADMIN_EMAIL;
+
 
 const app: Express = express();
 const { PORT, COOKIE_SECRET } = process.env;
@@ -45,14 +48,22 @@ app.use(
 app.use(express.json());
 
 //Auto refreshes IGDB for ADMIN_EMAIL then pulls IGDB game database
-function iRunEverySunday() {
+function iRunEveryTuesday() {
     //ADMIN_EMAIL is in .env;
     IGDBAuthorizationModel(ADMIN_EMAIL);
     IGDBGameDatabasePullModel(ADMIN_EMAIL);
     steamGameGrab();
 }
 
-scheduleJob('1 0 * * 2', iRunEverySunday);
+scheduleJob('1 0 * * 2', iRunEveryTuesday);
+
+/*function iRunEveryFewMins() {
+
+    clearEmptyBoards();
+
+}*/
+
+//scheduleJob('*/5 * * * *', iRunEveryFewMins);
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public', { extensions: ['html'] }));

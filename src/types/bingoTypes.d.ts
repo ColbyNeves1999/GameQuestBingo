@@ -5,5 +5,6 @@ type bingoPara = {
     inex: number,
     free: number,
     gameCode: string,
+    sessionLeader: string,
 
 };

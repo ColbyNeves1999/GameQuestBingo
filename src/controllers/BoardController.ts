@@ -3,6 +3,7 @@ import { bingoSelector } from '../models/BingoModel';
 
 //import { Game } from '../models/Game';
 import { GameManager } from '../models/GameManager';
+//import { addBoard } from '../models/BoardModel';
 
 type SSEClient = {
     userId: string;
@@ -54,13 +55,14 @@ function broadcastUpdate(data: unknown): void {
 
 function updateBoard(req: Request, res: Response): void {
 
-    const { x, y, z } = req.body as { x: number; y: number; z: number };
+    const { x, y, z, identifier } = req.body as { x: number; y: number; z: number, identifier: string };
 
     board[x][y] = !board[x][y]; // toggle the cell
     const update = {
         x,
         y,
         z,
+        identifier,
         isSelected: board[x][y],
     };
     broadcastUpdate(update);
@@ -77,9 +79,11 @@ function bingoJoinPage(req: Request, res: Response): void {
 
 function sessionJoin(req: Request, res: Response): void {
 
-    const { gameCode } = req.body as bingoPara;
+    const { gameCode, sessionLeader } = req.body as bingoPara;
 
-    const game = GameManager.getGame(gameCode); // to get a game
+    const game = GameManager.getGame(gameCode, sessionLeader); // to get a game
+
+    game.addPlayer(req.session.authenticatedUser.email, res);
 
     res.render('boardPage', { game });
 
@@ -157,13 +161,16 @@ async function selectBingoObjectives(req: Request, res: Response): Promise<void>
         ];
     }
 
-    GameManager.createNewGame(gameCode); // to add a new game
-    const game = GameManager.getGame(gameCode); // to get a game
+    GameManager.createNewGame(gameCode, req.session.authenticatedUser.email); // to add a new game
+    const game = GameManager.getGame(gameCode, req.session.authenticatedUser.email); // to get a game
+
     game.board = board;
     game.binObj = binObj;
     game.bal = bal;
 
     game.addPlayer(req.session.authenticatedUser.email, res);
+
+    //await addBoard(gameCode);
 
     res.render('boardPage', { game });
 
