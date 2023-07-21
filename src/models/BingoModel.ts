@@ -100,6 +100,7 @@ async function bingoSelector(size: number, title: string, inex: number, free: nu
             bingoArray[i] = addedObj;
         }
 
+        //This is making sure there is a free space if the users want it. I think 9x9 is off by 1
         if (free == 1) {
 
             if (bingoObjectives == 9) {

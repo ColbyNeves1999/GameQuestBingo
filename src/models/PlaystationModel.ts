@@ -1,3 +1,4 @@
+//----- Expiramental function for Playstation data pulls -----//
 
 async function getAuthenticationToken(npsso: string): Promise<string> {
     const params = [

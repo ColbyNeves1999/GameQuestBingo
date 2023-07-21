@@ -1,1 +1,0 @@
-//Currently empty. Controller and Model files are created at the same time for consistancy

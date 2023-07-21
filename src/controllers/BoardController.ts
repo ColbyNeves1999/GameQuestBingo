@@ -1,3 +1,5 @@
+//Base code for online board play provided Christopher Saldivar
+
 import { Request, Response } from 'express';
 import { bingoSelector } from '../models/BingoModel';
 
@@ -11,7 +13,6 @@ type SSEClient = {
 // This array will hold all of the clients that are waiting for updates
 let clients: SSEClient[] = [];
 
-// I just made this as a dummy "board"
 let board = [
     [false, false, false],
     [false, false, false],
@@ -19,8 +20,7 @@ let board = [
 ];
 
 function subscribeToUpdates(req: Request, res: Response): void {
-    // I'm just doing this since I'll be using the userId. up to you if you want them to be logged in
-    // But you'll need a unique identifier for the clients.
+
     if (!req.session.isLoggedIn) {
         res.sendStatus(403);
     }
@@ -46,9 +46,11 @@ function subscribeToUpdates(req: Request, res: Response): void {
 }
 
 function broadcastUpdate(data: unknown): void {
+
     // So you have to send data in a string in the format "data: <Data you want to send as JSON>\n\n"
     // You **must** have the literal text "data: " in the string and ending with two newlines
     clients.forEach((client) => client.res.write(`data: ${JSON.stringify(data)}\n\n`));
+
 }
 
 function updateBoard(req: Request, res: Response): void {
@@ -67,6 +69,7 @@ function updateBoard(req: Request, res: Response): void {
     res.json(update);
 }
 
+//Central board rendering function. Allows for less code when joining/creating boards
 function renderBoard(req: Request, res: Response): void {
 
     const { gameCode } = req.params as bingoCode;
@@ -166,6 +169,8 @@ async function selectBingoObjectives(req: Request, res: Response): Promise<void>
         ];
     }
 
+    //Will clean up after confirming all code works. createNewGame doesn't need to take two,
+    //I can make it take just 1 parameter and put const code before creating game.
     GameManager.createNewGame(gameCode, req.session.authenticatedUser.email); // to add a new game
     const code = gameCode + req.session.authenticatedUser.email;
     const game = GameManager.getGame(code); // to get a game
@@ -175,7 +180,7 @@ async function selectBingoObjectives(req: Request, res: Response): Promise<void>
     game.binObj = binObj;
     game.bal = bal;
 
-    //res.render(`boardPage`, { game });
+    //Redirects to "generic" board rendering function
     res.redirect(`/board/${game.gameCode}`);
 
 }

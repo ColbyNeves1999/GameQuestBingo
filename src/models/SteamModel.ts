@@ -7,6 +7,8 @@ import { getGameByName, setSteamID } from "./GameModel";
 
 const steamAchievementRepository = AppDataSource.getRepository(SteamAchieve);
 
+//DO NOT RUN THIS FUNCTION. THE CODE DOES IT ON ITS OWN. TAKES OVER AN HOUR TO COMPLETE.
+//Grabs every game on steam and it's achievements, that isn't already in the database.
 async function steamGameGrab(): Promise<void> {
     console.log("Checking steam for games and achievements");
     const fetchResponse = await fetch('https://api.steampowered.com/ISteamApps/GetAppList/v2/', {
@@ -66,6 +68,8 @@ async function getSteamAchievement(achievement: string, game: Game): Promise<Ste
 
 }
 
+//Grabs achievements for games on steam. Due to the inconsistant data Steam can and does return,
+//there are try/catches constantly. Returned data can be wildly vary, and therefore fail, at any point
 async function steamAchievementGrab(appid: string, steamGame: Game): Promise<void> {
 
     const steam_key = process.env.STEAM_API_KEY;
@@ -116,8 +120,6 @@ async function steamAchievementGrab(appid: string, steamGame: Game): Promise<voi
     } catch {
         return;
     }
-
-
 
     return;
 

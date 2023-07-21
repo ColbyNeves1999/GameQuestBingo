@@ -100,10 +100,12 @@ async function IGDBGameDatabasePullModel(email: string): Promise<void> {
 
 }
 
+//This function grabs all platforms IGDB has in order to apply data to games
 async function IGDBPlatformDatabasePullModel(email: string): Promise<void> {
 
     const user = await getUserByEmail(email);
 
+    //Gets as many game consoles as it can
     const fetchResponse = await fetch('https://api.igdb.com/v4/platforms', {
         method: 'POST',
         body: `fields name; limit 500;`,

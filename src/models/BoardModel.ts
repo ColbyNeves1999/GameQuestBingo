@@ -5,9 +5,11 @@ import { GameManager } from './GameManager';
 
 const boardRepository = AppDataSource.getRepository(boardName);
 
+//-----Expiramental functions for dealing with boards. May delete later-----//
+
 async function addBoard(sessionName: string): Promise<void> {
 
-    //Create the new user object and saves data
+    //Create the new board object and saves data
     let newBoard = new boardName();
     newBoard.sessionName = sessionName;
 
