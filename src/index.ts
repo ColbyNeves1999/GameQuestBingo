@@ -95,9 +95,9 @@ app.post("/selectBingoObjectives", selectBingoObjectives); //Chooses objectives 
 app.get("/bingoJoinPage", bingoJoinPage);
 app.post("/sessionJoin", sessionJoin);
 
-app.get('/board/:gameCode', renderBoard); //Board rendering code. Basis Provided by Christopher Saldivar
-app.get('/board/subscribe/:gameCode', subscribeToUpdates); //Board update subscription code. Basis Provided by Christopher Saldivar
-app.post('/board/:gameCode', updateBoard); //Board update code. Basis Provided by Christopher Saldivar
+app.get("/board/:gameCode", renderBoard); //Board rendering code. Basis Provided by Christopher Saldivar
+app.get("/board/subscribe/:gameCode", subscribeToUpdates); //Board update subscription code. Basis Provided by Christopher Saldivar
+app.post("/board/:gameCode", updateBoard); //Board update code. Basis Provided by Christopher Saldivar
 
 app.listen(PORT, () => {
     console.log(`Listening at http://localhost:${PORT}`);

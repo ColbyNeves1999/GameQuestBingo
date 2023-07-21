@@ -14,8 +14,6 @@ class Game {
 
     binObj: string[][];
 
-    sessionLeader: string;
-
     bal: number;
 
     constructor(gameCode: string) {
@@ -28,8 +26,6 @@ class Game {
         this.binObj = [[]];
 
         this.bal = 3;
-
-        this.sessionLeader = "";
 
         this.gameCode = gameCode;
         this.players = [];

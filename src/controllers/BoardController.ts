@@ -56,14 +56,13 @@ function broadcastUpdate(data: unknown): void {
 
 function updateBoard(req: Request, res: Response): void {
 
-    const { x, y, z, identifier } = req.body as { x: number; y: number; z: number, identifier: string };
+    const { x, y, z } = req.body as { x: number; y: number; z: number };
 
     board[x][y] = !board[x][y]; // toggle the cell
     const update = {
         x,
         y,
         z,
-        identifier,
         isSelected: board[x][y],
     };
     broadcastUpdate(update);
@@ -77,7 +76,16 @@ function renderBoard(req: Request, res: Response): void {
 
     const game = GameManager.getGame(gameCode);
 
-    game.addPlayer(req.session.authenticatedUser.email, res);
+    let inIt = 0;
+    for (let i = 0; i < game.players.length; i++) {
+        if (game.players[i].userId === req.session.authenticatedUser.email) {
+            inIt = 1;
+        }
+    }
+
+    if (inIt === 0) {
+        game.addPlayer(req.session.authenticatedUser.email, res);
+    }
 
     res.render('boardPage', { game });
 }
@@ -184,8 +192,8 @@ async function selectBingoObjectives(req: Request, res: Response): Promise<void>
 
     GameManager.createNewGame(code); // to add a new game
     const game = GameManager.getGame(code); // to get a game
-    console.log(game);
-    game.addPlayer(req.session.authenticatedUser.email, res);
+
+    //game.addPlayer(req.session.authenticatedUser.email, res);
 
     game.board = board;
     game.binObj = binObj;

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 
 // Immediately subscribe to updates
-//const boardEvents = new EventSource('/board/subscribe');
 const gameCode = window.location.pathname.split('/').slice(-1);
 const boardEvents = new EventSource(`/board/subscribe/${gameCode}`);
 
