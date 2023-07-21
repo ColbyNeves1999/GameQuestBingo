@@ -7,8 +7,8 @@ class GameManager {
         GameManager.games[gameCode + user] = new Game(gameCode, user);
     }
 
-    static getGame(gameCode: string, user: string): Game {
-        return GameManager.games[gameCode + user];
+    static getGame(gameCode: string): Game {
+        return GameManager.games[gameCode];
     }
 
 

@@ -1,9 +1,7 @@
 import { Request, Response } from 'express';
 import { bingoSelector } from '../models/BingoModel';
 
-//import { Game } from '../models/Game';
 import { GameManager } from '../models/GameManager';
-//import { addBoard } from '../models/BoardModel';
 
 type SSEClient = {
     userId: string;
@@ -70,7 +68,14 @@ function updateBoard(req: Request, res: Response): void {
 }
 
 function renderBoard(req: Request, res: Response): void {
-    res.render('boardPage', { board });
+
+    const { gameCode } = req.params as bingoCode;
+
+    const game = GameManager.getGame(gameCode);
+
+    game.addPlayer(req.session.authenticatedUser.email, res);
+
+    res.render('boardPage', { game });
 }
 
 function bingoJoinPage(req: Request, res: Response): void {
@@ -81,11 +86,11 @@ function sessionJoin(req: Request, res: Response): void {
 
     const { gameCode, sessionLeader } = req.body as bingoPara;
 
-    const game = GameManager.getGame(gameCode, sessionLeader); // to get a game
+    const code = gameCode + sessionLeader;
 
-    game.addPlayer(req.session.authenticatedUser.email, res);
+    const game = GameManager.getGame(code); // to get a game
 
-    res.render('boardPage', { game });
+    res.redirect(`/board/${game.gameCode}`);
 
 }
 
@@ -162,17 +167,16 @@ async function selectBingoObjectives(req: Request, res: Response): Promise<void>
     }
 
     GameManager.createNewGame(gameCode, req.session.authenticatedUser.email); // to add a new game
-    const game = GameManager.getGame(gameCode, req.session.authenticatedUser.email); // to get a game
+    const code = gameCode + req.session.authenticatedUser.email;
+    const game = GameManager.getGame(code); // to get a game
+    game.addPlayer(req.session.authenticatedUser.email, res);
 
     game.board = board;
     game.binObj = binObj;
     game.bal = bal;
 
-    game.addPlayer(req.session.authenticatedUser.email, res);
-
-    //await addBoard(gameCode);
-
-    res.render('boardPage', { game });
+    //res.render(`boardPage`, { game });
+    res.redirect(`/board/${game.gameCode}`);
 
 }
 

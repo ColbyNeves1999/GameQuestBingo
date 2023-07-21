@@ -8,3 +8,8 @@ type bingoPara = {
     sessionLeader: string,
 
 };
+
+type bingoCode = {
+    gameCode: string,
+    sessionLeader: string,
+};

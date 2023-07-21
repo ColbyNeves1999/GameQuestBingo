@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 
 // Immediately subscribe to updates
-const boardEvents = new EventSource('/board/subscribe');
+//const boardEvents = new EventSource('/board/subscribe');
+const gameCode = window.location.pathname.split('/').slice(-1);
+const boardEvents = new EventSource(`/board/subscribe/${gameCode}`);
 
 // Get all cells
 const cells = Array.from(document.querySelectorAll('.cell'));
@@ -25,23 +27,25 @@ boardEvents.onmessage = (e) => {
     if (isSelected) {
         selectedCell.classList.add('chosen');
         selectedCell.classList.remove('empty');
-        //selectedCell.textContent = 'chosen';
+
     } else {
         selectedCell.classList.add('empty');
         selectedCell.classList.remove('chosen');
-        //selectedCell.textContent = 'empty';
+
     }
+
 };
 
 async function selectCell(x, y, z) {
     // Just send a post request to the server telling it we clicked the cell at (x, y)
-    await fetch('/board', {
+    await fetch(`/board/${gameCode}`, {
         method: 'post',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({ x, y, z }),
     });
+
 }
 
 async function handleCellClick(event) {
