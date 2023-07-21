@@ -92,7 +92,7 @@ app.post("/createObjective", validateNewUserObj, objectiveSubmit); //Validates o
 app.post("/bingoCreatorPage", bingoCreatorPage); //Takes users to page where they choose bingo parameters
 app.post("/selectBingoObjectives", selectBingoObjectives); //Chooses objectives for bingo card
 
-app.post("/bingoJoinPage", bingoJoinPage);
+app.get("/bingoJoinPage", bingoJoinPage);
 app.post("/sessionJoin", sessionJoin);
 
 app.get('/board/:gameCode', renderBoard); //Board rendering code. Basis Provided by Christopher Saldivar

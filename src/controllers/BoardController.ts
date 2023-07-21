@@ -4,6 +4,7 @@ import { Request, Response } from 'express';
 import { bingoSelector } from '../models/BingoModel';
 
 import { GameManager } from '../models/GameManager';
+//import argon2 from 'argon2';
 
 type SSEClient = {
     userId: string;
@@ -85,13 +86,19 @@ function bingoJoinPage(req: Request, res: Response): void {
     res.render('bingoJoin', {});
 }
 
-function sessionJoin(req: Request, res: Response): void {
+async function sessionJoin(req: Request, res: Response): Promise<void> {
 
     const { gameCode, sessionLeader } = req.body as bingoPara;
 
     const code = gameCode + sessionLeader;
+    //const codeHash = await argon2.hash(code);
 
     const game = GameManager.getGame(code); // to get a game
+
+    if (!game) {
+        res.redirect('/bingoJoinPage');
+        return;
+    }
 
     res.redirect(`/board/${game.gameCode}`);
 
@@ -169,11 +176,15 @@ async function selectBingoObjectives(req: Request, res: Response): Promise<void>
         ];
     }
 
-    //Will clean up after confirming all code works. createNewGame doesn't need to take two,
-    //I can make it take just 1 parameter and put const code before creating game.
-    GameManager.createNewGame(gameCode, req.session.authenticatedUser.email); // to add a new game
     const code = gameCode + req.session.authenticatedUser.email;
+
+    //Will come back to figure hashing out. Since code will appear in URL, in case someone
+    //is streaming, we don't want the code/email combo getting out.
+    //const codeHash = await argon2.hash(code); 
+
+    GameManager.createNewGame(code); // to add a new game
     const game = GameManager.getGame(code); // to get a game
+    console.log(game);
     game.addPlayer(req.session.authenticatedUser.email, res);
 
     game.board = board;

@@ -18,7 +18,7 @@ class Game {
 
     bal: number;
 
-    constructor(gameCode: string, user: string) {
+    constructor(gameCode: string) {
         this.board = [
             [false, false, false],
             [false, false, false],
@@ -31,7 +31,7 @@ class Game {
 
         this.sessionLeader = "";
 
-        this.gameCode = gameCode + user;
+        this.gameCode = gameCode;
         this.players = [];
     }
 
