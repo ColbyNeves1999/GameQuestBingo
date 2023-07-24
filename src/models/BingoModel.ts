@@ -108,7 +108,7 @@ async function bingoSelector(size: number, title: string, inex: number, free: nu
             } else if (bingoObjectives == 25) {
                 bingoArray[12] = "Free Space";
             } else if (bingoObjectives == 81) {
-                bingoArray[41] = "Free Space";
+                bingoArray[40] = "Free Space";
             }
 
         }

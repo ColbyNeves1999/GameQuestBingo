@@ -42,7 +42,7 @@ async function selectCell(x, y, z) {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ x, y, z }),
+        body: JSON.stringify({ x, y, z, gameCode }),
     });
 
 }

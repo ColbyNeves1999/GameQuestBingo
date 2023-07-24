@@ -4,27 +4,19 @@ import { Request, Response } from 'express';
 import { bingoSelector } from '../models/BingoModel';
 
 import { GameManager } from '../models/GameManager';
+import { Game } from '../models/Game';
 //import argon2 from 'argon2';
 
-type SSEClient = {
-    userId: string;
-    res: Response;
-};
-
-// This array will hold all of the clients that are waiting for updates
-let clients: SSEClient[] = [];
-
-let board = [
-    [false, false, false],
-    [false, false, false],
-    [false, false, false],
-];
 
 function subscribeToUpdates(req: Request, res: Response): void {
 
     if (!req.session.isLoggedIn) {
         res.sendStatus(403);
     }
+
+    const { gameCode } = req.params as bingoCode;
+
+    const game = GameManager.getGame(gameCode);
 
     const { userId } = req.session.authenticatedUser;
 
@@ -36,36 +28,44 @@ function subscribeToUpdates(req: Request, res: Response): void {
     res.flushHeaders(); // flush the headers to establish SSE with client
 
     // Add the new client to our array of clients
-    clients.push({ userId, res });
+    //clients.push({ userId, res });
+    game.players.push({ userId, res })
 
     // We need to remove the client from the array when they close their connection
     // this happens if they navigate to another page/close the tab or browser/lose internet
     req.on('close', () => {
         console.log(`${userId} Connection closed`);
-        clients = clients.filter((client) => client.userId !== userId);
+        //clients = clients.filter((client) => client.userId !== userId);
+        game.players = game.players.filter((client) => client.userId !== userId);
     });
 }
 
-function broadcastUpdate(data: unknown): void {
+function broadcastUpdate(data: unknown, game: Game): void {
 
     // So you have to send data in a string in the format "data: <Data you want to send as JSON>\n\n"
     // You **must** have the literal text "data: " in the string and ending with two newlines
-    clients.forEach((client) => client.res.write(`data: ${JSON.stringify(data)}\n\n`));
+    //clients.forEach((client) => client.res.write(`data: ${JSON.stringify(data)}\n\n`));
+    //const game = GameManager.getGame(gameCode);
+
+    game.players.forEach((client) => client.res.write(`data: ${JSON.stringify(data)}\n\n`));
 
 }
 
 function updateBoard(req: Request, res: Response): void {
 
-    const { x, y, z } = req.body as { x: number; y: number; z: number };
+    const { x, y, z, gameCode } = req.body as { x: number; y: number; z: number, gameCode: string };
 
-    board[x][y] = !board[x][y]; // toggle the cell
+    const game = GameManager.getGame(gameCode);
+
+    game.board[x][y] = !game.board[x][y]; // toggle the cell
     const update = {
         x,
         y,
         z,
-        isSelected: board[x][y],
+        isSelected: game.board[x][y],
     };
-    broadcastUpdate(update);
+
+    broadcastUpdate(update, game);
     res.json(update);
 }
 
@@ -91,7 +91,14 @@ function renderBoard(req: Request, res: Response): void {
 }
 
 function bingoJoinPage(req: Request, res: Response): void {
+
+    if (!req.session.isLoggedIn) {
+        res.redirect('/login');
+        return;
+    }
+
     res.render('bingoJoin', {});
+
 }
 
 async function sessionJoin(req: Request, res: Response): Promise<void> {
@@ -116,6 +123,12 @@ async function selectBingoObjectives(req: Request, res: Response): Promise<void>
 
     const { title, size, inex, free, gameCode } = req.body as bingoPara;
     const temp = title.toLowerCase();
+
+    let board = [
+        [false, false, false],
+        [false, false, false],
+        [false, false, false],
+    ];
 
     const bingoArray = await bingoSelector(size, temp, inex, free);
 

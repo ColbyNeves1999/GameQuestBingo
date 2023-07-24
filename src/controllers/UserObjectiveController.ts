@@ -6,6 +6,11 @@ import { getGameByName } from '../models/GameModel';
 
 async function objectiveSubmittedPage(req: Request, res: Response): Promise<void> {
 
+    if (!req.session.isLoggedIn) {
+        res.redirect('/login');
+        return;
+    }
+
     const errorOcc = "";
     res.render('userObjectiveList', { errorOcc });
 
