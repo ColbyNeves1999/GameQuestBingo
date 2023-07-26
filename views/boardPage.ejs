@@ -15,20 +15,26 @@
         <% for( let x=0; x < game.bal; x++ ) { %>
             <% for( let y=0; y < game.bal; y++ ) { %>
                 <div <% /* We set the x and y coordinate of the cell so we can figure out which cell was clicked */ %>
-                    x="<%= x %>" y="<%= y %>" z = "<%= game.bal %>"
+                    x="<%= x %>" y="<%= y %>" z = "<%= game.bal %>" position = <%= position %>
 
-                                <% /* Set either the "chosen" or "empty" class for styling */ %>
-                                    class="cell <%= game.board[x][y] ? 'chosen' : 'empty' %>">
+                                    <% /* Set either the "chosen" or "empty" class for styling */ %>
+                                        class="cell <%= game.board[x][y] ? `chosenP${game.owner[x][y]}` : 'empty' %>">
 
-                                        <!-- Set the text for the cell -->
-                                        <%= game.binObj[x][y] %>
+                                            <!-- Set the text for the cell -->
+                                            <%= game.binObj[x][y] %>
+                                                <%= game.players.length %>
                 </div>
                 <% } %>
                     <% } %>
 
-                        <% for( let i=0; i < game.players.length; i++) {%>
+                        <% for( let i=0; i < game.players.length; i) {%>
                             <%= game.players[i].userId %>
-                                <% } %>>
+                                <% i=i + 2 %>
+                                    <%}%>
+
+
+
+    </div>
 
 </body>
 

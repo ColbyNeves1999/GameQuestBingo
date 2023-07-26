@@ -12,6 +12,8 @@ class Game {
 
     board: boolean[][];
 
+    owner: number[][];
+
     binObj: string[][];
 
     bal: number;
@@ -21,6 +23,12 @@ class Game {
             [false, false, false],
             [false, false, false],
             [false, false, false],
+        ];
+
+        this.owner = [
+            [0, 0, 0],
+            [0, 0, 0],
+            [0, 0, 0],
         ];
 
         this.binObj = [[]];

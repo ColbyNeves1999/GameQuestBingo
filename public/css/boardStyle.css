@@ -4,6 +4,7 @@
     grid-template-rows: repeat(3, 100px);
     gap: 10px;
     place-content: center;
+    text-align: center;
 }
 
 .board5 {
@@ -12,6 +13,7 @@
     grid-template-rows: repeat(5, 100px);
     gap: 10px;
     place-content: center;
+    text-align: center;
 }
 
 .board9 {
@@ -20,10 +22,27 @@
     grid-template-rows: repeat(9, 100px);
     gap: 10px;
     place-content: center;
+    text-align: center;
 }
 
 .chosen {
     background-color: rgb(146, 222, 146);
+}
+
+.chosenP1 {
+    background-color: rgb(0, 255, 234);
+}
+
+.chosenP2 {
+    background-color: rgb(255, 196, 0);
+}
+
+.chosenP3 {
+    background-color: rgb(9, 255, 0);
+}
+
+.chosenP4 {
+    background-color: rgb(164, 48, 222);
 }
 
 .empty {

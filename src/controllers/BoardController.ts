@@ -53,15 +53,22 @@ function broadcastUpdate(data: unknown, game: Game): void {
 
 function updateBoard(req: Request, res: Response): void {
 
-    const { x, y, z, gameCode } = req.body as { x: number; y: number; z: number, gameCode: string };
+    const { x, y, z, gameCode, position } = req.body as { x: number; y: number; z: number, gameCode: string, position: number };
 
     const game = GameManager.getGame(gameCode);
+
+    if (game.owner[x][y] == 0) {
+        game.owner[x][y] = position;
+    } else {
+        game.owner[x][y] = 0;
+    }
 
     game.board[x][y] = !game.board[x][y]; // toggle the cell
     const update = {
         x,
         y,
         z,
+        position,
         isSelected: game.board[x][y],
     };
 
@@ -76,6 +83,14 @@ function renderBoard(req: Request, res: Response): void {
 
     const game = GameManager.getGame(gameCode);
 
+    /*if (game.players.length >= 8) {
+
+        const stateOfGame = "Sorry, this game is at maximum capacity. But you can make you own!";
+        res.render('bingoCreator', { stateOfGame });
+        return;
+
+    }*/
+
     let inIt = 0;
     for (let i = 0; i < game.players.length; i++) {
         if (game.players[i].userId === req.session.authenticatedUser.email) {
@@ -87,7 +102,26 @@ function renderBoard(req: Request, res: Response): void {
         game.addPlayer(req.session.authenticatedUser.email, res);
     }
 
-    res.render('boardPage', { game });
+    let position = 0;
+
+    if (game.players[0].userId == req.session.authenticatedUser.email) {
+
+        position = 1;
+
+    } else if (game.players[2].userId == req.session.authenticatedUser.email) {
+
+        position = 2;
+
+    } else if (game.players[4].userId == req.session.authenticatedUser.email) {
+
+        position = 3;
+
+    } else {
+        position = 4;
+    }
+
+
+    res.render('boardPage', { game, position });
 }
 
 function bingoJoinPage(req: Request, res: Response): void {
@@ -166,12 +200,18 @@ async function selectBingoObjectives(req: Request, res: Response): Promise<void>
     }
 
     let binObj;
+    let boardOwner;
 
     if (bingoArray.length == 9) {
         binObj = [
             [bingoArray[0], bingoArray[1], bingoArray[2]],
             [bingoArray[3], bingoArray[4], bingoArray[5]],
             [bingoArray[6], bingoArray[7], bingoArray[8]],
+        ];
+        boardOwner = [
+            [0, 0, 0],
+            [0, 0, 0],
+            [0, 0, 0],
         ];
     } else if (bingoArray.length == 25) {
 
@@ -181,6 +221,13 @@ async function selectBingoObjectives(req: Request, res: Response): Promise<void>
             [bingoArray[10], bingoArray[11], bingoArray[12], bingoArray[13], bingoArray[14]],
             [bingoArray[15], bingoArray[16], bingoArray[17], bingoArray[18], bingoArray[19]],
             [bingoArray[20], bingoArray[21], bingoArray[22], bingoArray[23], bingoArray[24]]
+        ];
+        boardOwner = [
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0]
         ];
 
     } else {
@@ -195,6 +242,17 @@ async function selectBingoObjectives(req: Request, res: Response): Promise<void>
             [bingoArray[63], bingoArray[64], bingoArray[65], bingoArray[66], bingoArray[67], bingoArray[68], bingoArray[69], bingoArray[70], bingoArray[71]],
             [bingoArray[72], bingoArray[73], bingoArray[74], bingoArray[75], bingoArray[76], bingoArray[77], bingoArray[78], bingoArray[79], bingoArray[80]]
         ];
+        boardOwner = [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ];
     }
 
     const code = gameCode + req.session.authenticatedUser.email;
@@ -206,11 +264,10 @@ async function selectBingoObjectives(req: Request, res: Response): Promise<void>
     GameManager.createNewGame(code); // to add a new game
     const game = GameManager.getGame(code); // to get a game
 
-    //game.addPlayer(req.session.authenticatedUser.email, res);
-
     game.board = board;
     game.binObj = binObj;
     game.bal = bal;
+    game.owner = boardOwner;
 
     //Redirects to "generic" board rendering function
     res.redirect(`/board/${game.gameCode}`);
