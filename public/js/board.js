@@ -22,18 +22,20 @@ boardEvents.onmessage = (e) => {
     const selectedCell = cells[x * z + y];
 
     // Now toggle the cell's style and text
-    if (isSelected) {
-        //selectedCell.classList.add('chosen');
-        selectedCell.classList.add(`chosenP${position}`);
-        selectedCell.classList.remove('empty');
+    if (position != 10) {
+        if (isSelected) {
 
-    } else {
-        selectedCell.classList.add('empty');
-        //selectedCell.classList.remove('chosen');
-        for (let i = 1; i <= 4; i++) {
-            selectedCell.classList.remove(`chosenP${i}`);
+            selectedCell.classList.add(`chosenP${position}`);
+            selectedCell.classList.remove('empty');
+
+        } else {
+
+            selectedCell.classList.add('empty');
+            for (let i = 1; i <= 4; i++) {
+                selectedCell.classList.remove(`chosenP${i}`);
+            }
+
         }
-
     }
 
 };

@@ -10,6 +10,10 @@ class Game {
 
     players: SSEClient[];
 
+    playerNames: string[];
+
+    spectatorNames: string[];
+
     board: boolean[][];
 
     owner: number[][];
@@ -30,6 +34,10 @@ class Game {
             [0, 0, 0],
             [0, 0, 0],
         ];
+
+        this.playerNames = [];
+
+        this.spectatorNames = [];
 
         this.binObj = [[]];
 

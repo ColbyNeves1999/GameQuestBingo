@@ -22,15 +22,15 @@
 
                                             <!-- Set the text for the cell -->
                                             <%= game.binObj[x][y] %>
-                                                <%= game.players.length %>
+                                                <%= position %>
                 </div>
                 <% } %>
                     <% } %>
 
-                        <% for( let i=0; i < game.players.length; i) {%>
-                            <%= game.players[i].userId %>
-                                <% i=i + 2 %>
-                                    <%}%>
+                        <% for( let i=0; i < game.players.length; i++) {%>
+                            <%= game.playerNames[i] %>
+
+                                <%}%>
 
 
 

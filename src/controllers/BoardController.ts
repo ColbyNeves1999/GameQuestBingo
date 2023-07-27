@@ -53,12 +53,15 @@ function broadcastUpdate(data: unknown, game: Game): void {
 
 function updateBoard(req: Request, res: Response): void {
 
-    const { x, y, z, gameCode, position } = req.body as { x: number; y: number; z: number, gameCode: string, position: number };
+    const { x, y, z, gameCode } = req.body as { x: number; y: number; z: number, gameCode: string, position: number };
+    let { position } = req.body as { position: number };
 
     const game = GameManager.getGame(gameCode);
 
     if (game.owner[x][y] == 0) {
+
         game.owner[x][y] = position;
+
     } else {
         game.owner[x][y] = 0;
     }
@@ -83,43 +86,52 @@ function renderBoard(req: Request, res: Response): void {
 
     const game = GameManager.getGame(gameCode);
 
-    /*if (game.players.length >= 8) {
-
-        const stateOfGame = "Sorry, this game is at maximum capacity. But you can make you own!";
-        res.render('bingoCreator', { stateOfGame });
-        return;
-
-    }*/
-
-    let inIt = 0;
-    for (let i = 0; i < game.players.length; i++) {
-        if (game.players[i].userId === req.session.authenticatedUser.email) {
-            inIt = 1;
-        }
-    }
-
-    if (inIt === 0) {
-        game.addPlayer(req.session.authenticatedUser.email, res);
-    }
-
     let position = 0;
 
-    if (game.players[0].userId == req.session.authenticatedUser.email) {
+    if (game.playerNames.length >= 4 && !game.playerNames.includes(req.session.authenticatedUser.email)) {
 
-        position = 1;
-
-    } else if (game.players[2].userId == req.session.authenticatedUser.email) {
-
-        position = 2;
-
-    } else if (game.players[4].userId == req.session.authenticatedUser.email) {
-
-        position = 3;
+        position = 10;
+        game.spectatorNames.push(req.session.authenticatedUser.email);
+        game.addPlayer(req.session.authenticatedUser.email, res);
 
     } else {
-        position = 4;
-    }
 
+        if (game.playerNames.length >= 4 && !game.playerNames.includes(req.session.authenticatedUser.email)) {
+
+            const stateOfGame = "Sorry, this game is at maximum capacity. But you can make you own!";
+            res.render('bingoCreator', { stateOfGame });
+            return;
+
+        }
+
+        let inIt = 0;
+        for (let i = 0; i < game.players.length; i++) {
+            if (game.players[i].userId === req.session.authenticatedUser.email) {
+                inIt = 1;
+            }
+        }
+
+        if (inIt === 0) {
+            game.addPlayer(req.session.authenticatedUser.email, res);
+            game.playerNames.push(req.session.authenticatedUser.email);
+        }
+
+        if (game.playerNames[0] == req.session.authenticatedUser.email) {
+
+            position = 1;
+
+        } else if (game.playerNames[1] == req.session.authenticatedUser.email) {
+
+            position = 2;
+
+        } else if (game.playerNames[2] == req.session.authenticatedUser.email) {
+
+            position = 3;
+
+        } else {
+            position = 4;
+        }
+    }
 
     res.render('boardPage', { game, position });
 }
