@@ -53,20 +53,24 @@ function broadcastUpdate(data: unknown, game: Game): void {
 
 function updateBoard(req: Request, res: Response): void {
 
-    const { x, y, z, gameCode } = req.body as { x: number; y: number; z: number, gameCode: string, position: number };
-    let { position } = req.body as { position: number };
+    const { x, y, z, gameCode, position } = req.body as { x: number; y: number; z: number, gameCode: string, position: number };
 
     const game = GameManager.getGame(gameCode);
+    console.log(position);
+    if (position != 10) {
 
-    if (game.owner[x][y] == 0) {
+        if (game.owner[x][y] == 0) {
 
-        game.owner[x][y] = position;
+            game.owner[x][y] = position;
 
-    } else {
-        game.owner[x][y] = 0;
+        } else {
+            game.owner[x][y] = 0;
+        }
+
+        game.board[x][y] = !game.board[x][y]; // toggle the cell
+
     }
 
-    game.board[x][y] = !game.board[x][y]; // toggle the cell
     const update = {
         x,
         y,
