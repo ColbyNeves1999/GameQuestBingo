@@ -27,7 +27,6 @@ async function IGDBAuthorizationModel(email: string): Promise<string> {
     });
 
     const resJson = await fetchResponse.json();
-
     const { access_token } = resJson as accessCode;
 
     await setUserIGDBAuth(email, access_token)

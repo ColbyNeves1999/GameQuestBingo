@@ -4,30 +4,32 @@ import express, { Express } from 'express';
 import session from 'express-session';
 import connectSqlite3 from 'connect-sqlite3';
 import { scheduleJob } from 'node-schedule';
-//Game related Imports
+
+//Video Game related Imports
 import { getAllGames } from './controllers/GameController';
+
 //IGDB Imports
 import { IGDBAuthorization, IGDBGameDatabasePull } from './controllers/IGDBController';
 import { IGDBGameDatabasePullModel, IGDBAuthorizationModel } from './models/IGDBModel';
+
 //Xbox Imports
 //import { xboxAuth } from './controllers/XboxController';
+
 //User related Imports
 import { registerUser, logIn } from './controllers/UserController';
 import { objectiveSubmittedPage, objectiveSubmit } from './controllers/UserObjectiveController';
 import { validateNewUserBody, validateLoginBody } from './validators/loginValidators';
 import { validateNewUserObj } from './validators/userObjectiveValidators';
+
 //Bingo Imports
 import { bingoCreatorPage } from './controllers/BingoController';
+import { renderBoard, subscribeToUpdates, updateBoard, selectBingoObjectives, bingoJoinPage, sessionJoin } from './controllers/BoardController';
+
 //Steam Imports
 import { steamGameGrabController } from './controllers/SteamController';
 import { steamGameGrab } from './models/SteamModel';
-//Bingo Page Imports
-import { renderBoard, subscribeToUpdates, updateBoard, selectBingoObjectives, bingoJoinPage, sessionJoin } from './controllers/BoardController';
-
-//import { clearEmptyBoards } from './models/BoardModel';
 
 const ADMIN_EMAIL = process.env.DATABASEADMIN_EMAIL;
-
 
 const app: Express = express();
 const { PORT, COOKIE_SECRET } = process.env;
@@ -47,12 +49,13 @@ app.use(
 
 app.use(express.json());
 
-//Auto refreshes IGDB for ADMIN_EMAIL then pulls IGDB game database
+//Auto refreshes IGDB for ADMIN_EMAIL then pulls IGDB game database; Every Tuesday at 00:01 (12:01 AM);
 function iRunEveryTuesday() {
     //ADMIN_EMAIL is in .env;
     IGDBAuthorizationModel(ADMIN_EMAIL);
     IGDBGameDatabasePullModel(ADMIN_EMAIL);
     steamGameGrab();
+
 }
 
 scheduleJob('1 0 * * 2', iRunEveryTuesday);

@@ -48,3 +48,48 @@
 .empty {
     background-color: rgb(244, 92, 92);
 }
+
+.bingoTitleColor {
+    background-color: rgb(183, 183, 183);
+    text-align: center;
+    padding-top: 30%;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.bingoTitle3 {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(1, 100px);
+    gap: 10px;
+    place-content: center;
+    text-align: center;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.bingoTitle5 {
+    display: grid;
+    grid-template-columns: repeat(5, 100px);
+    grid-template-rows: repeat(1, 100px);
+    gap: 10px;
+    place-content: center;
+    text-align: center;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.bingoTitle9 {
+    display: grid;
+    grid-template-columns: repeat(9, 100px);
+    grid-template-rows: repeat(1, 100px);
+    gap: 10px;
+    place-content: center;
+    text-align: center;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.background {
+    background-color: black;
+}

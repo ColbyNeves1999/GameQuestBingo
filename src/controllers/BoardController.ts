@@ -1,4 +1,4 @@
-//Base code for online board play provided Christopher Saldivar
+//Base code for online board play provided Christopher Saldivar;
 
 import { Request, Response } from 'express';
 import { bingoSelector } from '../models/BingoModel';
@@ -27,15 +27,13 @@ function subscribeToUpdates(req: Request, res: Response): void {
     res.setHeader('Connection', 'keep-alive');
     res.flushHeaders(); // flush the headers to establish SSE with client
 
-    // Add the new client to our array of clients
-    //clients.push({ userId, res });
+    // Add the new players to our array of players
     game.players.push({ userId, res })
 
-    // We need to remove the client from the array when they close their connection
+    // We need to remove the player from the array when they close their connection
     // this happens if they navigate to another page/close the tab or browser/lose internet
     req.on('close', () => {
         console.log(`${userId} Connection closed`);
-        //clients = clients.filter((client) => client.userId !== userId);
         game.players = game.players.filter((client) => client.userId !== userId);
     });
 }
@@ -44,9 +42,6 @@ function broadcastUpdate(data: unknown, game: Game): void {
 
     // So you have to send data in a string in the format "data: <Data you want to send as JSON>\n\n"
     // You **must** have the literal text "data: " in the string and ending with two newlines
-    //clients.forEach((client) => client.res.write(`data: ${JSON.stringify(data)}\n\n`));
-    //const game = GameManager.getGame(gameCode);
-
     game.players.forEach((client) => client.res.write(`data: ${JSON.stringify(data)}\n\n`));
 
 }
@@ -56,7 +51,7 @@ function updateBoard(req: Request, res: Response): void {
     const { x, y, z, gameCode, position } = req.body as { x: number; y: number; z: number, gameCode: string, position: number };
 
     const game = GameManager.getGame(gameCode);
-    console.log(position);
+
     if (position != 10) {
 
         if (game.owner[x][y] == 0) {
@@ -81,6 +76,7 @@ function updateBoard(req: Request, res: Response): void {
 
     broadcastUpdate(update, game);
     res.json(update);
+
 }
 
 //Central board rendering function. Allows for less code when joining/creating boards
@@ -92,6 +88,7 @@ function renderBoard(req: Request, res: Response): void {
 
     let position = 0;
 
+    //Controls game size. If there are already 4 players in the game, then any later joins will be spectators
     if (game.playerNames.length >= 4 && !game.playerNames.includes(req.session.authenticatedUser.email)) {
 
         position = 10;
@@ -137,7 +134,17 @@ function renderBoard(req: Request, res: Response): void {
         }
     }
 
-    res.render('boardPage', { game, position });
+    let titleArr;
+
+    if (game.bal === 3) {
+        titleArr = ["G", "Q", "B"];
+    } else if (game.bal === 5) {
+        titleArr = ["B", "I", "N", "G", "O"];
+    } else {
+        titleArr = ["G", "A", "M", "E", "Q", "U", "E", "S", "T"];
+    }
+
+    res.render('boardPage', { game, position, titleArr });
 }
 
 function bingoJoinPage(req: Request, res: Response): void {
@@ -153,9 +160,15 @@ function bingoJoinPage(req: Request, res: Response): void {
 
 async function sessionJoin(req: Request, res: Response): Promise<void> {
 
+    if (!req.session.isLoggedIn) {
+        res.redirect('/login');
+        return;
+    }
+
     const { gameCode, sessionLeader } = req.body as bingoPara;
 
     const code = gameCode + sessionLeader;
+    //TODO: Hide key from URL. Mainly to allow anyone streaming to hide their key.
     //const codeHash = await argon2.hash(code);
 
     const game = GameManager.getGame(code); // to get a game
@@ -171,8 +184,18 @@ async function sessionJoin(req: Request, res: Response): Promise<void> {
 
 async function selectBingoObjectives(req: Request, res: Response): Promise<void> {
 
+    if (!req.session.isLoggedIn) {
+        res.redirect('/login');
+        return;
+    }
+
     const { title, size, inex, free, gameCode } = req.body as bingoPara;
     const temp = title.toLowerCase();
+
+    //bal stands for bingo array length
+    let bal = 3;
+    let binObj;
+    let boardOwner;
 
     let board = [
         [false, false, false],
@@ -187,9 +210,6 @@ async function selectBingoObjectives(req: Request, res: Response): Promise<void>
         res.render('bingoCreator', { stateOfGame });
         return;
     }
-
-    //bal stands for bingo array length
-    let bal = 3;
 
     if (bingoArray.length == 25) {
         bal = 5;
@@ -215,9 +235,7 @@ async function selectBingoObjectives(req: Request, res: Response): Promise<void>
         ];
     }
 
-    let binObj;
-    let boardOwner;
-
+    //TODO: Condense 220-271; Leave alone till project is mostly finished
     if (bingoArray.length == 9) {
         binObj = [
             [bingoArray[0], bingoArray[1], bingoArray[2]],
@@ -273,8 +291,7 @@ async function selectBingoObjectives(req: Request, res: Response): Promise<void>
 
     const code = gameCode + req.session.authenticatedUser.email;
 
-    //Will come back to figure hashing out. Since code will appear in URL, in case someone
-    //is streaming, we don't want the code/email combo getting out.
+    //TODO: Hide key from URL. Mainly to allow anyone streaming to hide their key.
     //const codeHash = await argon2.hash(code); 
 
     GameManager.createNewGame(code); // to add a new game

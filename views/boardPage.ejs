@@ -6,34 +6,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/css/boardStyle.css">
+    <link rel="stylesheet" href="/css/style.css" />
     <script src="/js/board.js" defer></script>
 </head>
 
 <body>
-    <div id="board" class="board<%=game.bal%>">
+    <div class="btn-left">
+        <form id="setDevice" method="GET" action="/index">
+            <button class="btn2">Home</button>
+        </form>
+    </div>
 
+    <div class="bingoTitle<%=game.bal%>">
+
+        <%for(let i=0; i < game.bal; i++) { %>
+            <div class="bingoTitleColor">
+                <%= titleArr[i] %>
+            </div>
+            <%}%>
+
+    </div>
+    <div id="board" class="board<%=game.bal%>">
         <% for( let x=0; x < game.bal; x++ ) { %>
             <% for( let y=0; y < game.bal; y++ ) { %>
-                <div <% /* We set the x and y coordinate of the cell so we can figure out which cell was clicked */ %>
-                    x="<%= x %>" y="<%= y %>" z = "<%= game.bal %>" position = <%= position %>
+                <% /* We set the x and y coordinate of the cell so we can figure out which cell was clicked */ %>
+                    <div x="<%= x %>" y="<%= y %>" z="<%= game.bal %>" position=<%=position %>
 
-                                    <% /* Set either the "chosen" or "empty" class for styling */ %>
-                                        class="cell <%= game.board[x][y] ? `chosenP${game.owner[x][y]}` : 'empty' %>">
+                        <% /* Set either the "chosen" or "empty" class for styling */ %>
+                            class="cell <%= game.board[x][y] ? `chosenP${game.owner[x][y]}` : 'empty' %>">
 
-                                            <!-- Set the text for the cell -->
-                                            <%= game.binObj[x][y] %>
-                                                <%= position %>
-                </div>
-                <% } %>
+                                <!-- Set the text for the cell -->
+                                <%= game.binObj[x][y] %>
+
+                    </div>
                     <% } %>
+                        <% } %>
 
-                        <% for( let i=0; i < game.players.length; i++) {%>
-                            <%= game.playerNames[i] %>
+                            <% for( let i=0; i < game.players.length; i++) {%>
+                                <%= game.playerNames[i] %>
 
-                                <%}%>
-
-
-
+                                    <%}%>
     </div>
 
 </body>

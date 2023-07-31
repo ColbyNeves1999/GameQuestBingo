@@ -7,11 +7,11 @@
 
 .btn1 {
   background-color: #ffffff;
-  border-radius: 4rem;
   transition: box-shadow 0.35s, top 0.3s, transform 0.45s;
   width: 150px;
   box-shadow: 0 1px 0 0 #000000, 0 2px 0 0 #000000, 0 3px 0 0 #000000;
   transform: rotateX(0) rotateY(0) rotateZ(0);
+  border-radius: 4rem;
   font-size: 0.75rem;
   font-weight: bold;
 }
