@@ -17,10 +17,22 @@
         </form>
     </div>
 
+    <div class="playerList">
+
+        <% for(let i=0; i < 4; i++) {%>
+
+            <div style="border: 3px solid black;" class="playerListColor<%=i+1%>">
+                <%= game.playerNames[i] %>
+            </div>
+
+            <%}%>
+
+    </div>
+
     <div class="bingoTitle<%=game.bal%>">
 
         <%for(let i=0; i < game.bal; i++) { %>
-            <div style="border: 5px solid black;" class="bingoTitleColor">
+            <div style="border: 3px solid black;" class="bingoTitleColor">
                 <%= titleArr[i] %>
             </div>
             <%}%>
@@ -28,10 +40,11 @@
     </div>
 
     <div id="board" class="board<%=game.bal%>">
+
         <% for( let x=0; x < game.bal; x++ ) { %>
             <% for( let y=0; y < game.bal; y++ ) { %>
                 <% /* We set the x and y coordinate of the cell so we can figure out which cell was clicked */ %>
-                    <div style="border: 5px solid black;" x="<%= x %>" y="<%= y %>" z="<%= game.bal %>"
+                    <div style="border: 3px solid black;" x="<%= x %>" y="<%= y %>" z="<%= game.bal %>"
                         position=<%=position %>
 
                         <% /* Set either the "chosen" or "empty" class for styling */ %>

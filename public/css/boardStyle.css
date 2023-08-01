@@ -77,3 +77,41 @@
     place-content: center;
     text-align: center;
 }
+
+.playerList {
+    display: grid;
+    grid-template-columns: repeat(4, 200px);
+    grid-template-rows: repeat(1, 100px);
+    place-content: center;
+    text-align: center;
+    word-wrap: break-word;
+    padding-bottom: 1%;
+}
+
+.playerListColor1 {
+    background-color: rgb(0, 255, 234);
+    text-align: center;
+    padding-top: 18%;
+    font-weight: bold;
+}
+
+.playerListColor2 {
+    background-color: rgb(255, 196, 0);
+    text-align: center;
+    padding-top: 18%;
+    font-weight: bold;
+}
+
+.playerListColor3 {
+    background-color: rgb(9, 255, 0);
+    text-align: center;
+    padding-top: 18%;
+    font-weight: bold;
+}
+
+.playerListColor4 {
+    background-color: rgb(164, 48, 222);
+    text-align: center;
+    padding-top: 18%;
+    font-weight: bold;
+}
