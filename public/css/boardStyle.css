@@ -4,6 +4,7 @@
     grid-template-rows: repeat(3, 100px);
     place-content: center;
     text-align: center;
+    word-wrap: break-word;
 }
 
 .board5 {
@@ -12,6 +13,7 @@
     grid-template-rows: repeat(5, 100px);
     place-content: center;
     text-align: center;
+    word-wrap: break-word;
 }
 
 .board9 {
@@ -20,6 +22,7 @@
     grid-template-rows: repeat(9, 100px);
     place-content: center;
     text-align: center;
+    word-wrap: break-word;
 }
 
 .chosen {
@@ -52,6 +55,7 @@
     padding-top: 30%;
     font-size: 2rem;
     font-weight: bold;
+    word-wrap: break-word;
 }
 
 .bingoTitle3 {

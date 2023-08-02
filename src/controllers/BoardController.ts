@@ -48,11 +48,11 @@ function broadcastUpdate(data: unknown, game: Game): void {
 
 function updateBoard(req: Request, res: Response): void {
 
-    const { x, y, z, gameCode, position } = req.body as { x: number; y: number; z: number, gameCode: string, position: number };
+    const { x, y, z, gameCode, position, refresh } = req.body as { x: number; y: number; z: number, gameCode: string, position: number, refresh: number };
 
     const game = GameManager.getGame(gameCode);
 
-    if (position != 10) {
+    if (position != 10 && position != 200) {
 
         if (game.owner[x][y] == 0) {
 
@@ -66,13 +66,29 @@ function updateBoard(req: Request, res: Response): void {
 
     }
 
-    const update = {
-        x,
-        y,
-        z,
-        position,
-        isSelected: game.board[x][y],
-    };
+    let update;
+
+    if (refresh == 0) {
+        update = {
+            x,
+            y,
+            z,
+            position,
+            isSelected: game.board[x][y],
+        };
+    } else {
+        update = {
+            x,
+            y,
+            z,
+            position,
+            refresh,
+            playerOne: game.playerNames[0],
+            playerTwo: game.playerNames[1],
+            playerThree: game.playerNames[2],
+            playerFour: game.playerNames[3]
+        };
+    }
 
     broadcastUpdate(update, game);
     res.json(update);

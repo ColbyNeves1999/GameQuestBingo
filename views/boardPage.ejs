@@ -8,9 +8,11 @@
     <link rel="stylesheet" href="/css/boardStyle.css">
     <link rel="stylesheet" href="/css/style.css" />
     <script src="/js/board.js" defer></script>
+
 </head>
 
-<body>
+<body onload="onPageLoad()">
+
     <div class="btn-left">
         <form id="setDevice" method="GET" action="/index">
             <button class="btn2">Home</button>
@@ -21,8 +23,10 @@
 
         <% for(let i=0; i < 4; i++) {%>
 
-            <div style="border: 3px solid black;" class="playerListColor<%=i+1%>">
+            <div id="P<%=i+1%>" style="border: 3px solid black;" class="playerListColor<%=i+1%>">
+
                 <%= game.playerNames[i] %>
+
             </div>
 
             <%}%>
@@ -32,7 +36,7 @@
     <div class="bingoTitle<%=game.bal%>">
 
         <%for(let i=0; i < game.bal; i++) { %>
-            <div style="border: 3px solid black;" class="bingoTitleColor">
+            <div style="border: 3px solid black;" class="bingoTitleColor" playerPosition="P<%=i+1%>">
                 <%= titleArr[i] %>
             </div>
             <%}%>
@@ -59,5 +63,7 @@
     </div>
 
 </body>
+
+
 
 </html>
