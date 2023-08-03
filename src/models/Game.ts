@@ -22,6 +22,8 @@ class Game {
 
     bal: number;
 
+    winner: string;
+
     constructor(gameCode: string) {
         this.board = [
             [false, false, false],
@@ -45,6 +47,9 @@ class Game {
 
         this.gameCode = gameCode;
         this.players = [];
+
+        this.winner = "";
+
     }
 
     addPlayer(playerId: string, res: Response): void {

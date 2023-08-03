@@ -13,14 +13,46 @@ boardEvents.onmessage = (e) => {
     // `e.data` will be the text from the string in BoardController.ts
     // This string -> `data: ${JSON.stringify(data)}\n\n`
     // So e.data will be this part "JSON.stringify(data)" we just have to parse it now
-    const { x, y, z, position, isSelected, refresh, playerOne, playerTwo, playerThree, playerFour } = JSON.parse(e.data);
+    const { x, y, z, position, isSelected, winner, refresh, playerOne, playerTwo, playerThree, playerFour } = JSON.parse(e.data);
 
     if (x === undefined) {
         return;
     }
 
     //If refresh is 1, then it's updating all player's list of players.
-    if (refresh == 1) {
+
+    if (winner !== "" && !refresh) {
+
+        // Cells is a 1D array but we have 2D indices so we just convert them
+        // to a 1D index to get the cell
+        const selectedCell = cells[x * z + y];
+
+        // Now toggle the cell's style and text
+        if (isSelected) {
+
+            selectedCell.classList.add(`chosenP${position}`);
+            selectedCell.classList.remove('empty');
+
+        } else {
+
+            selectedCell.classList.add('empty');
+            for (let i = 1; i <= 4; i++) {
+                selectedCell.classList.remove(`chosenP${i}`);
+            }
+
+        }
+
+        if (position == 1) {
+            document.getElementById('P1').innerHTML = "Winner";
+        } else if (position == 2) {
+            document.getElementById('P2').innerHTML = "Winner";
+        } else if (position == 3) {
+            document.getElementById('P3').innerHTML = "Winner";
+        } else if (position == 4) {
+            document.getElementById('P4').innerHTML = "Winner";
+        }
+
+    } else if (refresh == 1) {
 
         document.getElementById('P1').innerHTML = playerOne;
 
@@ -61,6 +93,7 @@ boardEvents.onmessage = (e) => {
             }
 
         }
+
     }
 
 };

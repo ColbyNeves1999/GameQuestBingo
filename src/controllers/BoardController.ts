@@ -66,7 +66,70 @@ function updateBoard(req: Request, res: Response): void {
 
     }
 
+    if (z && z !== 200) {
+
+        let count = 0;
+
+        for (let i = 0; i < z; i++) {
+
+            if (game.owner[i][y] === position) {
+                count++;
+            }
+
+        }
+
+        if (count === z) {
+            game.winner = req.session.authenticatedUser.email;
+        } else {
+            count = 0;
+            for (let i = 0; i < z; i++) {
+
+                if (game.owner[x][i] === position) {
+                    count++;
+                }
+
+            }
+
+            if (count === z) {
+                game.winner = req.session.authenticatedUser.email;
+            } else {
+                count = 0;
+                for (let i = 0; i < z; i++) {
+
+                    if (game.owner[i][i] === position) {
+                        count++;
+                    }
+
+                }
+
+                if (count === z) {
+                    game.winner = req.session.authenticatedUser.email;
+                } else {
+                    count = 0;
+                    let temp = z - 1;
+                    for (let i = 0; i < z; i++) {
+
+                        if (game.owner[i][temp] === position) {
+                            count++;
+                        }
+
+                        temp = temp - 1;
+
+                    }
+
+                    if (count === z) {
+                        game.winner = req.session.authenticatedUser.email;
+                    }
+
+                }
+
+            }
+        }
+
+    }
+
     let update;
+    const winner = game.winner;
 
     if (refresh == 0) {
         update = {
@@ -74,6 +137,7 @@ function updateBoard(req: Request, res: Response): void {
             y,
             z,
             position,
+            winner,
             isSelected: game.board[x][y],
         };
     } else {
