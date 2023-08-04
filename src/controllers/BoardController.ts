@@ -52,39 +52,29 @@ function updateBoard(req: Request, res: Response): void {
 
     const game = GameManager.getGame(gameCode);
 
-    if (position != 10 && position != 200) {
+    if (game.stopGame === 0) {
 
-        if (game.owner[x][y] == 0) {
+        if (position != 10 && position != 200) {
 
-            game.owner[x][y] = position;
+            if (game.owner[x][y] == 0) {
 
-        } else {
-            game.owner[x][y] = 0;
-        }
+                game.owner[x][y] = position;
 
-        game.board[x][y] = !game.board[x][y]; // toggle the cell
-
-    }
-
-    if (z && z !== 200) {
-
-        let count = 0;
-
-        for (let i = 0; i < z; i++) {
-
-            if (game.owner[i][y] === position) {
-                count++;
+            } else {
+                game.owner[x][y] = 0;
             }
 
+            game.board[x][y] = !game.board[x][y]; // toggle the cell
+
         }
 
-        if (count === z) {
-            game.winner = req.session.authenticatedUser.email;
-        } else {
-            count = 0;
+        if (z && z !== 200) {
+
+            let count = 0;
+
             for (let i = 0; i < z; i++) {
 
-                if (game.owner[x][i] === position) {
+                if (game.owner[i][y] === position) {
                     count++;
                 }
 
@@ -96,7 +86,7 @@ function updateBoard(req: Request, res: Response): void {
                 count = 0;
                 for (let i = 0; i < z; i++) {
 
-                    if (game.owner[i][i] === position) {
+                    if (game.owner[x][i] === position) {
                         count++;
                     }
 
@@ -106,57 +96,75 @@ function updateBoard(req: Request, res: Response): void {
                     game.winner = req.session.authenticatedUser.email;
                 } else {
                     count = 0;
-                    let temp = z - 1;
                     for (let i = 0; i < z; i++) {
 
-                        if (game.owner[i][temp] === position) {
+                        if (game.owner[i][i] === position) {
                             count++;
                         }
-
-                        temp = temp - 1;
 
                     }
 
                     if (count === z) {
                         game.winner = req.session.authenticatedUser.email;
+                    } else {
+                        count = 0;
+                        let temp = z - 1;
+                        for (let i = 0; i < z; i++) {
+
+                            if (game.owner[i][temp] === position) {
+                                count++;
+                            }
+
+                            temp = temp - 1;
+
+                        }
+
+                        if (count === z) {
+                            game.winner = req.session.authenticatedUser.email;
+                        }
+
                     }
 
                 }
-
             }
+
         }
 
+        let update;
+        const winner = game.winner;
+
+        if (refresh == 0) {
+            update = {
+                x,
+                y,
+                z,
+                position,
+                winner,
+                isSelected: game.board[x][y],
+            };
+        } else {
+            update = {
+                x,
+                y,
+                z,
+                position,
+                refresh,
+                playerOne: game.playerNames[0],
+                playerTwo: game.playerNames[1],
+                playerThree: game.playerNames[2],
+                playerFour: game.playerNames[3]
+            };
+        }
+
+
+        broadcastUpdate(update, game);
+        res.json(update);
+
+
+        if (game.winner !== "") {
+            game.stopGame = 1
+        }
     }
-
-    let update;
-    const winner = game.winner;
-
-    if (refresh == 0) {
-        update = {
-            x,
-            y,
-            z,
-            position,
-            winner,
-            isSelected: game.board[x][y],
-        };
-    } else {
-        update = {
-            x,
-            y,
-            z,
-            position,
-            refresh,
-            playerOne: game.playerNames[0],
-            playerTwo: game.playerNames[1],
-            playerThree: game.playerNames[2],
-            playerFour: game.playerNames[3]
-        };
-    }
-
-    broadcastUpdate(update, game);
-    res.json(update);
-
 }
 
 //Central board rendering function. Allows for less code when joining/creating boards

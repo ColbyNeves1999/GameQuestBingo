@@ -24,6 +24,8 @@ class Game {
 
     winner: string;
 
+    stopGame: number;
+
     constructor(gameCode: string) {
         this.board = [
             [false, false, false],
@@ -49,6 +51,8 @@ class Game {
         this.players = [];
 
         this.winner = "";
+
+        this.stopGame = 0;
 
     }
 

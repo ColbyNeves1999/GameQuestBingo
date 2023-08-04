@@ -20,7 +20,6 @@ boardEvents.onmessage = (e) => {
     }
 
     //If refresh is 1, then it's updating all player's list of players.
-
     if (winner !== "" && !refresh) {
 
         // Cells is a 1D array but we have 2D indices so we just convert them
@@ -42,14 +41,24 @@ boardEvents.onmessage = (e) => {
 
         }
 
+        let temp = ""
+
         if (position == 1) {
+            temp = document.getElementById('P1').innerHTML;
             document.getElementById('P1').innerHTML = "Winner";
+            alert("Winner is: " + temp);
         } else if (position == 2) {
+            temp = document.getElementById('P2').innerHTML;
             document.getElementById('P2').innerHTML = "Winner";
+            alert("Winner is: " + temp);
         } else if (position == 3) {
+            temp = document.getElementById('P3').innerHTML;
             document.getElementById('P3').innerHTML = "Winner";
+            alert("Winner is: " + temp);
         } else if (position == 4) {
+            temp = document.getElementById('P4').innerHTML;
             document.getElementById('P4').innerHTML = "Winner";
+            alert("Winner is: " + temp);
         }
 
     } else if (refresh == 1) {
@@ -130,10 +139,7 @@ async function handleCellClick(event) {
 //////////////////////////////////
 async function onPageLoad() {
 
-    //const tempt = document.getElementById('P1').innerHTML;
-
-    //alert(tempt);
-
+    //Filling in specific values I can use to prevent incorrect data changes
     const x = 200;
     const y = 200;
     const z = 200;
