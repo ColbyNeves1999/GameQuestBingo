@@ -10,7 +10,7 @@ async function steamGameGrabController(req: Request, res: Response): Promise<voi
 
 }
 
-//Now defunct since steamAchievementGrab is ran when steamGameGrab. Leaving for possible future use
+//Now defunct since steamAchievementGrab is ran with steamGameGrab. Leaving for possible future use
 /*async function steamAchievementGrabController(req: Request, res: Response): Promise<void> {
 
     await steamAchievementGrab();

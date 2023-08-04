@@ -95,8 +95,8 @@ app.post("/createObjective", validateNewUserObj, objectiveSubmit); //Validates o
 app.post("/bingoCreatorPage", bingoCreatorPage); //Takes users to page where they choose bingo parameters
 app.post("/selectBingoObjectives", selectBingoObjectives); //Chooses objectives for bingo card
 
-app.get("/bingoJoinPage", bingoJoinPage);
-app.post("/sessionJoin", sessionJoin);
+app.get("/bingoJoinPage", bingoJoinPage); //Takes you to the page where you can join a bingo card
+app.post("/sessionJoin", sessionJoin); //Assigns your name to the player or spectator list of a bingo card
 
 app.get("/board/:gameCode", renderBoard); //Board rendering code. Basis Provided by Christopher Saldivar
 app.get("/board/subscribe/:gameCode", subscribeToUpdates); //Board update subscription code. Basis Provided by Christopher Saldivar

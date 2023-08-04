@@ -52,8 +52,11 @@ function updateBoard(req: Request, res: Response): void {
 
     const game = GameManager.getGame(gameCode);
 
+    //stopGame will always be 0 until someone gets a bingo, it is then set to 1
     if (game.stopGame === 0) {
 
+        //10 prevents spectators from modifying the board, and 200 is used for 
+        //refreshing the player list so that when a player joins, the list updates for everyone
         if (position != 10 && position != 200) {
 
             if (game.owner[x][y] == 0) {
@@ -68,10 +71,13 @@ function updateBoard(req: Request, res: Response): void {
 
         }
 
+        //Checks for a bingo in every direction from the position that is clicked
+        //!200 is to prevent this from triggering when player list refreshes
         if (z && z !== 200) {
 
             let count = 0;
 
+            //Horizontal check
             for (let i = 0; i < z; i++) {
 
                 if (game.owner[i][y] === position) {
@@ -83,7 +89,10 @@ function updateBoard(req: Request, res: Response): void {
             if (count === z) {
                 game.winner = req.session.authenticatedUser.email;
             } else {
+
                 count = 0;
+
+                //Vertical check
                 for (let i = 0; i < z; i++) {
 
                     if (game.owner[x][i] === position) {
@@ -95,7 +104,10 @@ function updateBoard(req: Request, res: Response): void {
                 if (count === z) {
                     game.winner = req.session.authenticatedUser.email;
                 } else {
+
                     count = 0;
+
+                    //Left Diagonal check
                     for (let i = 0; i < z; i++) {
 
                         if (game.owner[i][i] === position) {
@@ -107,8 +119,13 @@ function updateBoard(req: Request, res: Response): void {
                     if (count === z) {
                         game.winner = req.session.authenticatedUser.email;
                     } else {
+
                         count = 0;
+
+                        //Temp is used to keep track from the right side
                         let temp = z - 1;
+
+                        //Right Diagonal check
                         for (let i = 0; i < z; i++) {
 
                             if (game.owner[i][temp] === position) {
@@ -133,6 +150,7 @@ function updateBoard(req: Request, res: Response): void {
         let update;
         const winner = game.winner;
 
+        //Different data is sent based on whether we're refreshing the player list or the board
         if (refresh == 0) {
             update = {
                 x,
@@ -160,7 +178,7 @@ function updateBoard(req: Request, res: Response): void {
         broadcastUpdate(update, game);
         res.json(update);
 
-
+        //This happens after broadcastUpdate because it would prevent proper board updates
         if (game.winner !== "") {
             game.stopGame = 1
         }
@@ -235,6 +253,7 @@ function renderBoard(req: Request, res: Response): void {
     res.render('boardPage', { game, position, titleArr });
 }
 
+//Renders the Bingo join page
 function bingoJoinPage(req: Request, res: Response): void {
 
     if (!req.session.isLoggedIn) {
@@ -246,6 +265,7 @@ function bingoJoinPage(req: Request, res: Response): void {
 
 }
 
+//Manages the joining of a session and renders the board once done
 async function sessionJoin(req: Request, res: Response): Promise<void> {
 
     if (!req.session.isLoggedIn) {
@@ -270,6 +290,7 @@ async function sessionJoin(req: Request, res: Response): Promise<void> {
 
 }
 
+//Selects the bingo objectives and then creates the board for said objectives
 async function selectBingoObjectives(req: Request, res: Response): Promise<void> {
 
     if (!req.session.isLoggedIn) {
@@ -324,6 +345,7 @@ async function selectBingoObjectives(req: Request, res: Response): Promise<void>
     }
 
     //TODO: Condense 220-271; Leave alone till project is mostly finished
+    //Creates the bingo board's array of data, and the True/False array for board
     if (bingoArray.length == 9) {
         binObj = [
             [bingoArray[0], bingoArray[1], bingoArray[2]],

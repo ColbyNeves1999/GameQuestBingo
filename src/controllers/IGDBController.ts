@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { IGDBAuthorizationModel, IGDBGameDatabasePullModel } from '../models/IGDBModel';
 import { getUserByEmail } from '../models/UserModel';
 
+//Saves the Authorization code for the user's account and current session
 async function IGDBAuthorization(req: Request, res: Response): Promise<void> {
 
     await IGDBAuthorizationModel(req.session.authenticatedUser.email);
@@ -14,6 +15,7 @@ async function IGDBAuthorization(req: Request, res: Response): Promise<void> {
 
 }
 
+//Initiates the IGDB pulls
 async function IGDBGameDatabasePull(req: Request, res: Response): Promise<void> {
 
     const user = await getUserByEmail(req.session.authenticatedUser.email);

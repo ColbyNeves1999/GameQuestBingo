@@ -19,7 +19,7 @@ boardEvents.onmessage = (e) => {
         return;
     }
 
-    //If refresh is 1, then it's updating all player's list of players.
+    //Checks if a winner has been determined
     if (winner !== "" && !refresh) {
 
         // Cells is a 1D array but we have 2D indices so we just convert them
@@ -43,6 +43,7 @@ boardEvents.onmessage = (e) => {
 
         let temp = ""
 
+        //Sets the winner's player tile to Winner
         if (position == 1) {
             temp = document.getElementById('P1').innerHTML;
             document.getElementById('P1').innerHTML = "Winner";
@@ -61,7 +62,7 @@ boardEvents.onmessage = (e) => {
             alert("Winner is: " + temp);
         }
 
-    } else if (refresh == 1) {
+    } else if (refresh == 1) { //If refresh is 1, then it's updating all player's list of players.
 
         document.getElementById('P1').innerHTML = playerOne;
 
@@ -108,7 +109,7 @@ boardEvents.onmessage = (e) => {
 };
 
 async function selectCell(x, y, z, position, refresh) {
-    // Just send a post request to the server telling it we clicked the cell at (x, y)
+    // Post request to the server telling it we clicked the cell at (x, y) or to refresh the player list
     await fetch(`/board/${gameCode}`, {
         method: 'post',
         headers: {
@@ -134,9 +135,7 @@ async function handleCellClick(event) {
     await selectCell(x, y, z, position, refresh);
 }
 
-//////////////////////////////////
-//Code to handle player updates on page
-//////////////////////////////////
+//Code to handle player list updates on page when someone loads the page
 async function onPageLoad() {
 
     //Filling in specific values I can use to prevent incorrect data changes

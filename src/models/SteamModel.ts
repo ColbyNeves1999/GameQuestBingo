@@ -7,7 +7,7 @@ import { getGameByName, setSteamID } from "./GameModel";
 
 const steamAchievementRepository = AppDataSource.getRepository(SteamAchieve);
 
-//DO NOT RUN THIS FUNCTION. THE CODE DOES IT ON ITS OWN. TAKES OVER AN HOUR TO COMPLETE.
+//ATTENTION!!! DO NOT RUN steamGameGrab. THE CODE DOES IT ON ITS OWN. TAKES OVER AN HOUR TO COMPLETE.
 //Grabs every game on steam and it's achievements, that isn't already in the database.
 async function steamGameGrab(): Promise<void> {
     console.log("Checking steam for games and achievements");
