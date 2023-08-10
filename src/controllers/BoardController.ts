@@ -44,6 +44,7 @@ function broadcastUpdate(data: unknown, game: Game): void {
     // You **must** have the literal text "data: " in the string and ending with two newlines
     game.players.forEach((client) => client.res.write(`data: ${JSON.stringify(data)}\n\n`));
 
+
 }
 
 function updateBoard(req: Request, res: Response): void {
@@ -194,22 +195,22 @@ function renderBoard(req: Request, res: Response): void {
 
     let position = 0;
 
+    let spotAvail = 4;
+    for (let i = 0; i < 4; i++) {
+        if (!game.playerNames[i]) {
+            spotAvail = i;
+            i = 5;
+        }
+    }
+
     //Controls game size. If there are already 4 players in the game, then any later joins will be spectators
-    if (game.playerNames.length >= 4 && !game.playerNames.includes(req.session.authenticatedUser.email)) {
+    if ((spotAvail >= 4 || spotAvail < 0) && !game.playerNames.includes(req.session.authenticatedUser.email)) {
 
         position = 10;
         game.spectatorNames.push(req.session.authenticatedUser.email);
         game.addPlayer(req.session.authenticatedUser.email, res);
 
     } else {
-
-        if (game.playerNames.length >= 4 && !game.playerNames.includes(req.session.authenticatedUser.email)) {
-
-            const stateOfGame = "Sorry, this game is at maximum capacity. But you can make you own!";
-            res.render('bingoCreator', { stateOfGame });
-            return;
-
-        }
 
         let inIt = 0;
         for (let i = 0; i < game.players.length; i++) {
@@ -220,24 +221,16 @@ function renderBoard(req: Request, res: Response): void {
 
         if (inIt === 0) {
             game.addPlayer(req.session.authenticatedUser.email, res);
-            game.playerNames.push(req.session.authenticatedUser.email);
+            game.playerNames[spotAvail] = (req.session.authenticatedUser.email);
         }
 
-        if (game.playerNames[0] == req.session.authenticatedUser.email) {
-
-            position = 1;
-
-        } else if (game.playerNames[1] == req.session.authenticatedUser.email) {
-
-            position = 2;
-
-        } else if (game.playerNames[2] == req.session.authenticatedUser.email) {
-
-            position = 3;
-
-        } else {
-            position = 4;
+        for (let i = 0; i < 4; i++) {
+            if (game.playerNames[i] == req.session.authenticatedUser.email) {
+                position = i + 1;
+                i = 5
+            }
         }
+
     }
 
     let titleArr;
@@ -265,6 +258,45 @@ function bingoJoinPage(req: Request, res: Response): void {
 
 }
 
+async function sessionLeave(req: Request, res: Response): Promise<void> {
+
+    const { gameCode } = req.params;
+
+    const game = GameManager.getGame(gameCode);
+
+    for (let i = 0; i < 4; i++) {
+        if (game.playerNames[i] === req.session.authenticatedUser.email) {
+
+            game.playerNames[i] = undefined;
+
+
+
+        }
+    }
+
+    const x = 200;
+    const y = 200;
+    const z = 200;
+    const position = 200;
+    const refresh = 1;
+
+    const update = {
+        x,
+        y,
+        z,
+        position,
+        refresh,
+        playerOne: game.playerNames[0],
+        playerTwo: game.playerNames[1],
+        playerThree: game.playerNames[2],
+        playerFour: game.playerNames[3]
+    };
+
+    broadcastUpdate(update, game);
+    res.redirect("/index");
+
+}
+
 //Manages the joining of a session and renders the board once done
 async function sessionJoin(req: Request, res: Response): Promise<void> {
 
@@ -276,6 +308,7 @@ async function sessionJoin(req: Request, res: Response): Promise<void> {
     const { gameCode, sessionLeader } = req.body as bingoPara;
 
     const code = gameCode + sessionLeader;
+
     //TODO: Hide key from URL. Mainly to allow anyone streaming to hide their key.
     //const codeHash = await argon2.hash(code);
 
@@ -417,4 +450,4 @@ async function selectBingoObjectives(req: Request, res: Response): Promise<void>
 
 }
 
-export { subscribeToUpdates, updateBoard, renderBoard, selectBingoObjectives, bingoJoinPage, sessionJoin };
+export { subscribeToUpdates, updateBoard, renderBoard, selectBingoObjectives, bingoJoinPage, sessionJoin, sessionLeave };
