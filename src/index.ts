@@ -23,7 +23,7 @@ import { validateNewUserObj } from './validators/userObjectiveValidators';
 
 //Bingo Imports
 import { bingoCreatorPage } from './controllers/BingoController';
-import { renderBoard, subscribeToUpdates, updateBoard, selectBingoObjectives, bingoJoinPage, sessionJoin } from './controllers/BoardController';
+import { renderBoard, subscribeToUpdates, updateBoard, selectBingoObjectives, bingoJoinPage, sessionJoin, sessionLeave } from './controllers/BoardController';
 
 //Steam Imports
 import { steamGameGrabController } from './controllers/SteamController';
@@ -97,6 +97,7 @@ app.post("/selectBingoObjectives", selectBingoObjectives); //Chooses objectives 
 
 app.get("/bingoJoinPage", bingoJoinPage); //Takes you to the page where you can join a bingo card
 app.post("/sessionJoin", sessionJoin); //Assigns your name to the player or spectator list of a bingo card
+app.get("/sessionLeave/:gameCode", sessionLeave);
 
 app.get("/board/:gameCode", renderBoard); //Board rendering code. Basis Provided by Christopher Saldivar
 app.get("/board/subscribe/:gameCode", subscribeToUpdates); //Board update subscription code. Basis Provided by Christopher Saldivar

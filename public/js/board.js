@@ -64,7 +64,13 @@ boardEvents.onmessage = (e) => {
 
     } else if (refresh == 1) { //If refresh is 1, then it's updating all player's list of players.
 
-        document.getElementById('P1').innerHTML = playerOne;
+
+
+        if (!playerOne) {
+            document.getElementById('P1').innerHTML = "Player 1 Available";
+        } else {
+            document.getElementById('P1').innerHTML = playerOne;
+        }
 
         if (!playerTwo) {
             document.getElementById('P2').innerHTML = "Player 2 Available";

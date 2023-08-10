@@ -50,6 +50,9 @@ export class User {
     @Column({ default: null })
     refreshCode: string;
 
+    @Column({ default: false })
+    admin: boolean;
+
     @OneToMany(() => Objective, (objective) => objective.game, { cascade: ['insert', 'update'] })
     objectives: Relation<Objective>[];
 
