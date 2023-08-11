@@ -57,4 +57,19 @@ async function logIn(req: Request, res: Response): Promise<void> {
 
 }
 
-export { registerUser, logIn };
+async function playerHomePage(req: Request, res: Response): Promise<void> {
+
+    let user = undefined;
+
+    if (req.session.isLoggedIn) {
+        user = await getUserByEmail(req.session.authenticatedUser.email);
+    } else {
+        res.redirect('/login');
+        return;
+    }
+
+    res.render('playerPage', { user });
+
+}
+
+export { registerUser, logIn, playerHomePage };

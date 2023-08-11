@@ -5,6 +5,7 @@ import { bingoSelector } from '../models/BingoModel';
 
 import { GameManager } from '../models/GameManager';
 import { Game } from '../models/Game';
+import { updateUserWins } from '../models/UserModel';
 //import argon2 from 'argon2';
 
 
@@ -35,6 +36,17 @@ function subscribeToUpdates(req: Request, res: Response): void {
     req.on('close', () => {
         console.log(`${userId} Connection closed`);
         game.players = game.players.filter((client) => client.userId !== userId);
+
+        for (let i = 0; i < 4; i++) {
+            if (game.playerNames[i] === userId) {
+
+                game.playerNames[i] = undefined;
+
+
+
+            }
+        }
+
     });
 }
 
@@ -89,6 +101,11 @@ function updateBoard(req: Request, res: Response): void {
 
             if (count === z) {
                 game.winner = req.session.authenticatedUser.email;
+
+                if (game.playerNames.length > 1) {
+                    updateUserWins(req.session.authenticatedUser.email);
+                }
+
             } else {
 
                 count = 0;
@@ -104,6 +121,10 @@ function updateBoard(req: Request, res: Response): void {
 
                 if (count === z) {
                     game.winner = req.session.authenticatedUser.email;
+                    if (game.playerNames.length > 1) {
+                        updateUserWins(req.session.authenticatedUser.email);
+                    }
+
                 } else {
 
                     count = 0;
@@ -119,6 +140,9 @@ function updateBoard(req: Request, res: Response): void {
 
                     if (count === z) {
                         game.winner = req.session.authenticatedUser.email;
+                        if (game.playerNames.length > 1) {
+                            updateUserWins(req.session.authenticatedUser.email);
+                        }
                     } else {
 
                         count = 0;
@@ -139,6 +163,9 @@ function updateBoard(req: Request, res: Response): void {
 
                         if (count === z) {
                             game.winner = req.session.authenticatedUser.email;
+                            if (game.playerNames.length > 1) {
+                                updateUserWins(req.session.authenticatedUser.email);
+                            }
                         }
 
                     }
@@ -268,7 +295,6 @@ async function sessionLeave(req: Request, res: Response): Promise<void> {
         if (game.playerNames[i] === req.session.authenticatedUser.email) {
 
             game.playerNames[i] = undefined;
-
 
 
         }

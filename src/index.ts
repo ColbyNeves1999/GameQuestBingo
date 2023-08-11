@@ -16,7 +16,7 @@ import { IGDBGameDatabasePullModel, IGDBAuthorizationModel } from './models/IGDB
 //import { xboxAuth } from './controllers/XboxController';
 
 //User related Imports
-import { registerUser, logIn } from './controllers/UserController';
+import { registerUser, logIn, playerHomePage } from './controllers/UserController';
 import { objectiveSubmittedPage, objectiveSubmit } from './controllers/UserObjectiveController';
 import { validateNewUserBody, validateLoginBody } from './validators/loginValidators';
 import { validateNewUserObj } from './validators/userObjectiveValidators';
@@ -77,6 +77,7 @@ app.post('/registerUser', validateNewUserBody, registerUser); //Registers a user
 app.post('/login', validateLoginBody, logIn); //Lets a user login
 app.post('/IGBDAuth', IGDBAuthorization); //Allows a user to get IGDB Authorization (will only be used by Admin emails)
 app.post('/getGameDatabase', IGDBGameDatabasePull); //Allows for the IGDB game database to be pulled
+app.get('/playerHomepage', playerHomePage);
 
 //Page requests
 app.get('/getGames', getAllGames); //Gets alist of all games

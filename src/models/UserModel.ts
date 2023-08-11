@@ -45,4 +45,16 @@ async function setUserIGDBAuth(email: string, auth: string): Promise<void> {
 
 }
 
-export { addUser, getUserByEmail, setUserIGDBAuth };
+async function updateUserWins(email: string): Promise<void> {
+
+    const user = await getUserByEmail(email);
+
+    user.wins++;
+
+    await userRepository.save(user);
+
+    return;
+
+}
+
+export { addUser, getUserByEmail, setUserIGDBAuth, updateUserWins };
