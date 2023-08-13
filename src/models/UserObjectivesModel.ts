@@ -20,6 +20,10 @@ async function addObjective(title: Game, objective: string, user: User): Promise
 
 }
 
+async function deleteObjective(title: string, objective: string): Promise<void> {
+
+}
+
 async function getObj(objective: string, title: string): Promise<Objective | null> {
 
     const game = await getGameByName(title);
@@ -30,4 +34,15 @@ async function getObj(objective: string, title: string): Promise<Objective | nul
         .getOne();
 }
 
-export { addObjective, getObj };
+async function getAllGameObjectives(title: string): Promise<Objective[] | null> {
+
+    const game = await getGameByName(title);
+    const gameID = game.gameId;
+
+    return objectiveRepository.createQueryBuilder('game')
+        .where('gameGameID = :gameID', { gameID })
+        .getMany();
+
+}
+
+export { addObjective, getObj, getAllGameObjectives, deleteObjective };

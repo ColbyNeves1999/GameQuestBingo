@@ -68,7 +68,13 @@ async function playerHomePage(req: Request, res: Response): Promise<void> {
         return;
     }
 
-    res.render('playerPage', { user });
+    if (user.admin === false) {
+        res.render('playerPage', { user });
+    }
+
+    if (user.admin === true) {
+        res.render('adminPage', { user });
+    }
 
 }
 

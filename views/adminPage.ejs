@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>
+        <%= user.email %>'s Page
+    </title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+
+<body>
+
+    <div class="btn-left">
+        <form id="setDevice" method="GET" action="/index">
+            <button class="btn2">Home</button>
+        </form>
+    </div>
+
+    <div>
+        <%= user.email %>'s Page
+    </div>
+    <div>
+        <%= user.wins %>
+    </div>
+
+    <div>
+        <form method="POST" action="/displayObjectives">
+            <div class="btn-center">
+                <label for="title"></label>
+                <input class="input" type="title" name="title" id="title" placeholder="Game Name" required>
+            </div>
+            <div class="btn-center">
+                <button class="btn1">Look for Game</button>
+            </div>
+        </form>
+    </div>
+
+</body>
+
+</html>

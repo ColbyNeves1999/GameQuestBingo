@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Game List</title>
+</head>
+
+<body>
+    <form id="setDevice" method="GET" action="/index">
+        <button>Home</button>
+    </form>
+    <h3>
+        <form method="GET" action="/playerHomepage"><button class="btn1">User Homepage</button></form>
+    </h3>
+
+    <h3>Player Submitted Objective List</h3>
+    <h3>
+        <%= title %>
+    </h3>
+    <ul id="objList">
+        <% for( let i=0; i < objectives.length; i++ ) { %>
+            <li class="Objective">
+                <h3 class="objTitle">
+                    <%= objectives[i].objective %>
+                </h3>
+
+            </li>
+            <% } %>
+    </ul>
+
+</body>
+
+</html>

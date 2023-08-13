@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import { getUserByEmail } from '../models/UserModel';
-import { addObjective, getObj } from '../models/UserObjectivesModel';
+import { addObjective, getObj, getAllGameObjectives } from '../models/UserObjectivesModel';
 import { getGameByName } from '../models/GameModel';
 
 async function objectiveSubmittedPage(req: Request, res: Response): Promise<void> {
@@ -54,4 +54,14 @@ async function objectiveSubmit(req: Request, res: Response): Promise<void> {
 
 }
 
-export { objectiveSubmittedPage, objectiveSubmit };
+async function displayObjectives(req: Request, res: Response): Promise<void> {
+
+    const { title } = req.body as objPara;
+    const temp = title.toLowerCase();
+    //console.log(title);
+    const objectives = await getAllGameObjectives(temp);
+
+    res.render('gameObjectivePage', { title, objectives })
+
+}
+export { objectiveSubmittedPage, objectiveSubmit, displayObjectives };
