@@ -1,5 +1,5 @@
 .header1 {
-  color: #000000;
+  color: #ffffff;
   -webkit-text-stroke: 1px #000000;
   text-align: center;
   padding-top: 5px;
@@ -83,4 +83,12 @@
 
 .textbox1 {
   width: 300px;
+}
+
+body {
+  font-family: 'Archivo Black', sans-serif;
+  min-height: 100vh;
+  max-height: 100vh;
+  background-image: url('/imgs/qVMcOCCFBd2rsUrgPa3m--1--523l1.jpg');
+  background-size: cover;
 }

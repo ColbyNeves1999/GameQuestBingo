@@ -92,7 +92,7 @@ app.post("/steamGames", steamGameGrabController); //link for testing steamGameGr
 //User objectives
 app.post("/userObjectives", objectiveSubmittedPage); //Takes users to page where they can submit objectives
 app.post("/createObjective", validateNewUserObj, objectiveSubmit); //Validates objectives and submits them
-app.post('/deletePlayerObjective', deletePlayerObjective);
+app.post('/deletePlayerObjective', deletePlayerObjective); //Allows admins to delete user submitted objectives
 
 //Bingo Page
 app.post("/bingoCreatorPage", bingoCreatorPage); //Takes users to page where they choose bingo parameters
@@ -100,7 +100,7 @@ app.post("/selectBingoObjectives", selectBingoObjectives); //Chooses objectives 
 
 app.get("/bingoJoinPage", bingoJoinPage); //Takes you to the page where you can join a bingo card
 app.post("/sessionJoin", sessionJoin); //Assigns your name to the player or spectator list of a bingo card
-app.get("/sessionLeave/:gameCode", sessionLeave);
+app.get("/sessionLeave/:gameCode", sessionLeave); //Allows users to leave games they've joined
 
 app.get("/board/:gameCode", renderBoard); //Board rendering code. Basis Provided by Christopher Saldivar
 app.get("/board/subscribe/:gameCode", subscribeToUpdates); //Board update subscription code. Basis Provided by Christopher Saldivar

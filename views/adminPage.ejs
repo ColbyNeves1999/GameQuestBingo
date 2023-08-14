@@ -20,13 +20,21 @@
     </div>
 
     <div>
-        <%= user.email %>'s Page
-    </div>
-    <div>
-        <%= user.wins %>
+        <h1 class="header1">
+            <%= user.email %>'s Page
+        </h1>
     </div>
 
     <div>
+        <h1 class="header1">
+            You've won <%= user.wins %> bingo games!
+        </h1>
+    </div>
+
+    <div>
+        <h1 class="header1">
+            Type the name of a game below to look at all user submitted objectives.
+        </h1>
         <form method="POST" action="/displayObjectives">
             <div class="btn-center">
                 <label for="title"></label>
