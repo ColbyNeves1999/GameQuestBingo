@@ -17,7 +17,7 @@ import { IGDBGameDatabasePullModel, IGDBAuthorizationModel } from './models/IGDB
 
 //User related Imports
 import { registerUser, logIn, playerHomePage } from './controllers/UserController';
-import { objectiveSubmittedPage, objectiveSubmit, displayObjectives } from './controllers/UserObjectiveController';
+import { objectiveSubmittedPage, objectiveSubmit, displayObjectives, deletePlayerObjective } from './controllers/UserObjectiveController';
 import { validateNewUserBody, validateLoginBody } from './validators/loginValidators';
 import { validateNewUserObj } from './validators/userObjectiveValidators';
 
@@ -92,6 +92,7 @@ app.post("/steamGames", steamGameGrabController); //link for testing steamGameGr
 //User objectives
 app.post("/userObjectives", objectiveSubmittedPage); //Takes users to page where they can submit objectives
 app.post("/createObjective", validateNewUserObj, objectiveSubmit); //Validates objectives and submits them
+app.post('/deletePlayerObjective', deletePlayerObjective);
 
 //Bingo Page
 app.post("/bingoCreatorPage", bingoCreatorPage); //Takes users to page where they choose bingo parameters

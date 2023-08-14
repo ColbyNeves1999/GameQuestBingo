@@ -20,7 +20,13 @@ async function addObjective(title: Game, objective: string, user: User): Promise
 
 }
 
-async function deleteObjective(title: string, objective: string): Promise<void> {
+async function deleteObjective(objectiveID: string): Promise<void> {
+
+    await objectiveRepository
+        .createQueryBuilder('review')
+        .delete()
+        .where('objectiveID = :objectiveID', { objectiveID })
+        .execute();
 
 }
 

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import { getUserByEmail } from '../models/UserModel';
-import { addObjective, getObj, getAllGameObjectives } from '../models/UserObjectivesModel';
+import { addObjective, getObj, getAllGameObjectives, deleteObjective } from '../models/UserObjectivesModel';
 import { getGameByName } from '../models/GameModel';
 
 async function objectiveSubmittedPage(req: Request, res: Response): Promise<void> {
@@ -58,10 +58,30 @@ async function displayObjectives(req: Request, res: Response): Promise<void> {
 
     const { title } = req.body as objPara;
     const temp = title.toLowerCase();
-    //console.log(title);
+
     const objectives = await getAllGameObjectives(temp);
 
-    res.render('gameObjectivePage', { title, objectives })
+    res.render('gameObjectivePage', { title, objectives });
 
 }
-export { objectiveSubmittedPage, objectiveSubmit, displayObjectives };
+
+async function deletePlayerObjective(req: Request, res: Response): Promise<void> {
+
+    const user = await getUserByEmail(req.session.authenticatedUser.email);
+
+    const { objectiveID, title } = req.body as objPara;
+    const temp = title.toLowerCase();
+
+    if (user.admin === false) {
+        return;
+    }
+
+    await deleteObjective(objectiveID);
+
+    const objectives = await getAllGameObjectives(temp);
+
+    res.render('gameObjectivePage', { title, objectives });
+
+}
+
+export { objectiveSubmittedPage, objectiveSubmit, displayObjectives, deletePlayerObjective };

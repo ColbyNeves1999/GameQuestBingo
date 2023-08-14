@@ -9,22 +9,39 @@
 </head>
 
 <body>
+
     <form id="setDevice" method="GET" action="/index">
         <button>Home</button>
     </form>
+
     <h3>
         <form method="GET" action="/playerHomepage"><button class="btn1">User Homepage</button></form>
     </h3>
 
     <h3>Player Submitted Objective List</h3>
+
     <h3>
         <%= title %>
     </h3>
+
     <ul id="objList">
         <% for( let i=0; i < objectives.length; i++ ) { %>
             <li class="Objective">
                 <h3 class="objTitle">
                     <%= objectives[i].objective %>
+                        <form method="POST" action="/deletePlayerObjective">
+                            <div class="btn-center">
+                                <label for="objectiveID"></label>
+                                <input type="hidden" name="objectiveID" id="objectiveID" placeholder="objectiveID"
+                                    value="<%=objectives[i].objectiveID%>">
+                                <label for="title"></label>
+                                <input type="hidden" name="title" id="title" placeholder="title" value="<%=title%>">
+                            </div>
+                            <div class="btn-center">
+                                <button class="btn1">Delete</button>
+                            </div>
+                        </form>
+
                 </h3>
 
             </li>

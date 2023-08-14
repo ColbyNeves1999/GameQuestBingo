@@ -66,8 +66,14 @@ async function getGameByName(title: string): Promise<Game | null> {
 
 }
 
+async function getGameByID(gameId: string): Promise<Game | null> {
+
+    return gameRepository.findOne({ where: { gameId } });
+
+}
+
 async function getGames(): Promise<Game[]> {
     return await gameRepository.find();
 }
 
-export { addGame, getGameByName, getGames, setSteamID };
+export { addGame, getGameByName, getGames, setSteamID, getGameByID };
