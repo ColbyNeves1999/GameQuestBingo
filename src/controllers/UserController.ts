@@ -1,8 +1,12 @@
 import { Request, Response } from 'express';
 import argon2 from 'argon2';
 
+const ADMIN_EMAIL = process.env.DATABASEADMIN_EMAIL;
+
 //Imported functions from models
 import { addUser, getUserByEmail } from '../models/UserModel';
+import { IGDBAuthorizationModel, IGDBGameDatabasePullModel } from '../models/IGDBModel';
+import { steamGameGrab } from '../models/SteamModel';
 
 async function registerUser(req: Request, res: Response): Promise<void> {
 
@@ -78,4 +82,11 @@ async function playerHomePage(req: Request, res: Response): Promise<void> {
 
 }
 
-export { registerUser, logIn, playerHomePage };
+//Forces a refresh of the database. Only accessible by admin page.
+async function adminForceDatabaseRefresh(req: Request, res: Response) {
+    await IGDBAuthorizationModel(ADMIN_EMAIL);
+    await IGDBGameDatabasePullModel(ADMIN_EMAIL);
+    await steamGameGrab();
+}
+
+export { registerUser, logIn, playerHomePage, adminForceDatabaseRefresh };
