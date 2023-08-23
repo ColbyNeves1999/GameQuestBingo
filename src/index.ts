@@ -77,9 +77,9 @@ app.post('/registerUser', validateNewUserBody, registerUser); //Registers a user
 app.post('/login', validateLoginBody, logIn); //Lets a user login
 app.post('/IGBDAuth', IGDBAuthorization); //Allows a user to get IGDB Authorization (will only be used by Admin emails)
 app.post('/getGameDatabase', IGDBGameDatabasePull); //Allows for the IGDB game database to be pulled
-app.get('/playerHomepage', playerHomePage);
-app.post('/displayObjectives', displayObjectives);
-app.get('/adminForceDatabaseRefresh', adminForceDatabaseRefresh);
+app.get('/playerHomepage', playerHomePage); //Displays the player's homepage
+app.post('/displayObjectives', displayObjectives); //Displays all objectives for given game
+app.get('/adminForceDatabaseRefresh', adminForceDatabaseRefresh); //Allows Admin to force a database refresh
 
 //Page requests
 app.get('/getGames', getAllGames); //Gets alist of all games

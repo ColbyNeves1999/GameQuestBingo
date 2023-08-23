@@ -21,16 +21,16 @@
         <form method="GET" action="/playerHomepage"><button class="btn1">User Homepage</button></form>
     </h3>
 
-    <h3>Player Submitted Objective List</h3>
+    <h3 class="header1">Player Submitted Objective List</h3>
 
-    <h3>
+    <h3 class="header1">
         <%= title %>
     </h3>
 
     <ul id="objList">
         <% for( let i=0; i < objectives.length; i++ ) { %>
             <li class="Objective">
-                <h3 class="objTitle">
+                <h3 class="header1">
                     <%= objectives[i].objective %>
                         <form method="POST" action="/deletePlayerObjective">
                             <div class="btn-center">
@@ -40,7 +40,7 @@
                                 <label for="title"></label>
                                 <input type="hidden" name="title" id="title" placeholder="title" value="<%=title%>">
                             </div>
-                            <div class="btn-left">
+                            <div class="obj-center">
                                 <button class="btn1">Delete</button>
                             </div>
                         </form>
