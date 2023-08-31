@@ -45,7 +45,7 @@ async function steamGameGrab(): Promise<void> {
         await steamAchievementGrab(result.appid, result.isItAlreadyHere);
     });
 
-    await Promise.all(achievementsPromises);
+    await Promise.allSettled(achievementsPromises);
 
     console.log("I've grabbed all the achievements I can");
 
