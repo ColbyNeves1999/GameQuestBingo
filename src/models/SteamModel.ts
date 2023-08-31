@@ -103,17 +103,20 @@ async function steamAchievementGrab(appid: string, steamGame: Game): Promise<voi
         const { achievements } = availableGameStats;
 
         //This breaks down all achievements per game and adds them to the database
-        await Promise.all(achievements.map(async (achievement) => {
+        for (let i = 0; i < achievements.length; i++) {
+
             try {
-                const doesAchievementExist = await getSteamAchievement(achievement.displayName, steamGame);
+                //Makes sure duplicate achievements for steam aren't entered in
+                const doesAchievementExist = await getSteamAchievement(achievements[i].displayName, steamGame);
+                console.log(doesAchievementExist);
                 if (!doesAchievementExist) {
-                    await setSteamAchievements(achievement.displayName, steamGame);
-                    console.log(achievement.displayName);
+                    await setSteamAchievements(achievements[i].displayName, steamGame);
+                    console.log(achievements[i].displayName);
                 }
-            } catch (error) {
-                console.error(error);
+            } catch {
+                return;
             }
-        }));
+        }
 
     } catch (error) {
         console.error(error);
