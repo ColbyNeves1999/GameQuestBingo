@@ -15,8 +15,6 @@ async function steamGameGrab(): Promise<void> {
     const start = getCurrentTime();
 
     console.log("Checking steam for games and achievements");
-
-    //Fetches list of games on Steam
     const fetchResponse = await fetch('https://api.steampowered.com/ISteamApps/GetAppList/v2/', {
         method: 'GET',
         headers: {
@@ -24,35 +22,34 @@ async function steamGameGrab(): Promise<void> {
         }
     });
 
-    //Breaks down fetch response into array of games
     const resJson = await fetchResponse.json();
     const { applist } = resJson as steamAppList;
     const { apps } = applist as steamApps;
 
-    //Runs each member of the array in parallel, breaking it down into IDs and names
-    const results = await Promise.all(apps.map(async (app) => {
-        const { appid, name } = app;
-        const lowerName = name.toLowerCase();
+    for (let i = 0; i < apps.length; i++) {
+
+        //Gets name of game, and creates standard lower casing to make game searching reliable
+        const { appid, name } = apps[i] as steamGameData;
+        const lowerName = name.toLocaleLowerCase();
         const isItAlreadyHere = await getGameByName(lowerName);
-        return { appid, isItAlreadyHere };
-    }));
 
-    const gamesToFetchAchievements = results.filter((result) => result.isItAlreadyHere);
+        //Will take existing games and add steam ids to them and grabs their achievements
+        if (isItAlreadyHere) {
 
-    //Checks steam for achievements
-    const achievementsPromises = gamesToFetchAchievements.map(async (result) => {
-        console.log(result.appid, " ", result.isItAlreadyHere);
-        await steamAchievementGrab(result.appid, result.isItAlreadyHere);
-    });
+            await steamAchievementGrab(appid, isItAlreadyHere);
 
-    await Promise.allSettled(achievementsPromises);
+        }
 
+    }
+
+    //Used to verify achievement grabbing has been completed
     console.log("I've grabbed all the achievements I can");
 
     const stop = getCurrentTime();
     console.log("Start time: ", start);
     console.log("Stop time: ", stop);
 
+    return;
 }
 
 async function setSteamAchievements(achievement: string, game: Game): Promise<void> {
