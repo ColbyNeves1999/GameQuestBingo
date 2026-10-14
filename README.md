@@ -103,7 +103,7 @@ The game catalog fills on the weekly schedule, or immediately from the admin pag
 - Several API routes (`/steamGames`, `/getGameDatabase`, `/IGBDAuth`, `/adminForceDatabaseRefresh`) lack login or admin checks.
 - Xbox and PlayStation achievement imports were prototyped and then shelved.
 
-Most of these limitations were due to lack of experience at the time and my limited time fram. Potential fixes include
+Most of these limitations were due to lack of experience at the time and my limited time frame. Potential fixes include:
 - The use of an in-memory database system such as Redis.
 - A function to hash user emails before they were added to the database and/or the URL.
 - Utilizing Steam's game ID system to avoid matching games.
