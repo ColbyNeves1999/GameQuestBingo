@@ -98,8 +98,10 @@ The game catalog fills on the weekly schedule, or immediately from the admin pag
 ## Known limitations
 
 - Live rooms live in server memory, so they're lost on restart and the app can't scale past one process. 
-- Room codes include the host's email and appear in the URL (a TODO in the code was to hash them).
+- Room codes include the host's email and appear in the URL.
+    - Future implementations would hash these.
 - Steam games are matched to IGDB entries by exact lowercase title, so games with differing names miss their achievements.
+    - Utilizing SteamIDs would fix this.
 - Several API routes (`/steamGames`, `/getGameDatabase`, `/IGBDAuth`, `/adminForceDatabaseRefresh`) lack login or admin checks.
 - Xbox and PlayStation achievement imports were prototyped and then shelved.
 
