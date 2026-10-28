@@ -2,8 +2,6 @@
 
 A multiplayer web app that turns video game achievements into bingo cards. Pick a game, choose a card size, and the server builds a randomized card from that game's Steam achievements (and optionally community-submitted objectives). Up to four players race on the same card in real time, each claiming squares in their own color; the first to complete a row, column, or diagonal wins.
 
-Built solo between May and August 2023 (~85 commits).
-
 ## Features
 
 - **Card generation** in 3×3, 5×5, or 9×9, with an optional center free space. If a game doesn't have enough objectives for the requested size, the card automatically drops to the largest size it can fill.
@@ -99,9 +97,7 @@ The game catalog fills on the weekly schedule, or immediately from the admin pag
 
 - Live rooms live in server memory, so they're lost on restart and the app can't scale past one process. 
 - Room codes include the host's email and appear in the URL.
-    - Future implementations would hash these.
 - Steam games are matched to IGDB entries by exact lowercase title, so games with differing names miss their achievements.
-    - Utilizing SteamIDs would fix this.
 - Several API routes (`/steamGames`, `/getGameDatabase`, `/IGBDAuth`, `/adminForceDatabaseRefresh`) lack login or admin checks.
 - Xbox and PlayStation achievement imports were prototyped and then shelved.
 
